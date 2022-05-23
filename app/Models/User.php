@@ -61,18 +61,23 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function addresses()
-    {
-        return $this->hasMany(Address::class);
-    } 
+   
 
-    public function graduateds()
-    {
-        return $this->hasMany(Graduated::class);
-    }
+   
+
 
     public function socialNetworks()
     {
         return $this->hasMany(SocialNetwork::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsToMany(Roles::class)->withTimestamps();
+    }
+
+    public function contactInformation()
+    {
+        return $this->hasOne(ContactInformation::class,'user_id','id');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +21,14 @@ Route::get('/', function () {
 Route::get('/registro-Egresados', function () {
     return view('welcome');
 });
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
+    Route::get('/encuesta', [QuestionsController::class, 'index'])->name('encuesta');
+    Route::post('/encuesta', [QuestionsController::class, 'store'])->name('encuesta.store');
+    Route::get('/studens',[UsersController::class, 'indexStudents'])->name('studens');
+    Route::get('/graduates',[UsersController::class, 'indexGraduates'])->name('graduates');
+});

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGraduatedsTable extends Migration
+class CreateContactInformationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateGraduatedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('graduateds', function (Blueprint $table) {
+        Schema::create('contact_information', function (Blueprint $table) {
             $table->id();
             $table->string("enrollment",8)->unique();
-            //  $table->boolean("sex");
-             $table->date('date_graduate')->nullable();
-            
-            // $table->string("rfc")->nullable();
-             //$table->string("curp")->nullable();
+            $table->string("address");
+            $table->string("second_email");
+             $table->timestamp('date_graduate')->nullable();
              $table->string("phone_house",10)->unique();
              $table->unsignedBigInteger('user_id');
-             $table->foreign('user_id')->references('id')->on('users');
+             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ class CreateGraduatedsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('graduateds');
+        Schema::dropIfExists('contact_information');
     }
 }

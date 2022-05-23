@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     
     <x-jet-authentication-card>
         <x-slot name="logo">
@@ -178,4 +178,167 @@
             + '</div>');
             }
     </script>
-</x-guest-layout>
+</x-guest-layout> --}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Sistema para el seguimiento de egresados</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body>
+    <div id="booking" style="" class="section">
+        <div class="section-center">
+            <div class="container">
+                <div class="row">
+                    <div class="booking-form">
+                        <div class="form-header">
+                            <h1 id="titulo" class="animate__animated animate__fadeInDown animate__delay-.5s">Alumno</h1>
+                        </div>
+                        <form method="POST" action="{{ route('register') }}"
+                            class="animate__animated animate__fadeInUpBig animate__delay-.5s">
+                            @csrf
+                            <div id="formInit">
+                            <div class="row" >
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Nombre Completo</span>
+                                        <input class="form-control" type="text" name="name"
+                                            placeholder="Ingresa nombre completo">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Email</span>
+                                        <input class="form-control" type="email" name="email"
+                                            placeholder="Ingresa un correo">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="graduated" id="graduated" value = "0">
+                            <div class="form-group">
+                                <span class="form-label">Celular</span>
+                                <input class="form-control" type="tel" name="smart_phone"
+                                    placeholder="Ingresa tu numero celular de contacto">
+                            </div>
+                            <div class="form-group">
+                                <span class="form-label">Contraseña</span>
+                                <input class="form-control" type="password" name="password" >
+                            </div>
+                            <div class="form-group">
+                                <span class="form-label">Confirmar Contraseña</span>
+                                <input class="form-control" type="password" name="password_confirmation" >
+
+                            </div>
+
+                            <div class="form-group">
+                                <span class="form-label">Fecha de egreso</span>
+                                <input class="form-control" type="date" name="date_graduate"
+                                    placeholder="selecciona una fecha">
+                            </div>
+                            <div class="form-btn">
+                                <button class="submit-btn" onclick="slider(event, val = 2)">siguiente</button>
+                            </div>
+                        </div>
+                            <div id="formSecond" style="display: none">
+                            <div class="row" >
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Matricula</span>
+                                        <input class="form-control" type="number" name="enrollment"
+                                            placeholder="Ingresa tu maticula" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Segundo Email</span>
+                                        <input class="form-control" type="email" name="second_email"
+                                            placeholder="Ingresa un correo alternativo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="form-label">Direccion</span>
+                                <input class="form-control" type="text" name="address"
+                                    placeholder="Ingresa tu direccion actual" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <span class="form-label">Telefono de casa</span>
+                                <input class="form-control" type="t" name="phone_house"
+                                    placeholder="Ingresa un tel de casa">
+                            </div>
+                          
+                            <div class="row" >
+                                <div class="col-sm-6">
+                                    <div class="form-btn">
+                                        <button class="submit-btn-back" onclick="slider(event, val = 1)">Regresar</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button class="submit-btn" >Registrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            
+                        </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+<script>
+    let option = localStorage.getItem('option');
+    if (option == '1') {
+        document.getElementById('graduated').value = '1';
+        let elementdiv = document.getElementById('booking');
+        let titulo = document.getElementById('titulo');
+        let url = `{{ asset('img/egresados.jpg') }}`;
+        elementdiv.style.backgroundImage = `url(${url})`;
+        titulo.innerHTML = 'Egresado';
+
+    }
+    const slider = (event, val) => {
+        event.preventDefault();
+        let form = document.getElementById('formInit');
+        console.log('entro');
+        let form2 = document.getElementById('formSecond');
+        if( val == 1){
+         
+            form.style.display = 'block';
+            form2.style.display = 'none';
+            
+        }
+        if( val == 2){
+            form.style.display = 'none';
+           form2.style.display = 'block';
+        }
+    }
+</script>
+
+</html>
