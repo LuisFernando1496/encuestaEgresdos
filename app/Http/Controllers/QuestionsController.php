@@ -12,10 +12,11 @@ class QuestionsController extends Controller
 
     public function index()
     {
-        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
+        //$questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
         //  return $questions[19]->subQuestion;
-
-        return view('encuesta.index', compact('questions'));
+        
+       // return view('encuesta.index', compact('questions'));
+       return view('encuesta.menu_admin');
     }
 
 
