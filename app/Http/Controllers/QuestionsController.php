@@ -12,17 +12,15 @@ class QuestionsController extends Controller
 
     public function index()
     {
-        //$questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
-        //  return $questions[19]->subQuestion;
-        
-       // return view('encuesta.index', compact('questions'));
-       return view('encuesta.menu_admin');
+        return view('encuesta.menu_admin');
     }
 
 
     public function create()
     {
+        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
         
+        return view('encuesta.show_edit', compact('questions'));
     }
 
 
@@ -58,9 +56,12 @@ class QuestionsController extends Controller
     }
 
 
-    public function show(Questions $questions)
+    public function show()
     {
-        //
+        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
+        //  return $questions[19]->subQuestion;
+    
+        return view('encuesta.index', compact('questions')->get());
     }
 
 
@@ -70,14 +71,23 @@ class QuestionsController extends Controller
     }
 
 
-    public function update(Request $request, Questions $questions)
+    public function update(Request $request, $id)
     {
-        //
+        
     }
 
 
     public function destroy(Questions $questions)
     {
         //
+    }
+
+    public function exportPDF() {
+        //$encuesta = \PDF::loadView('encuesta.plantilla_reporte');
+        //return $pdf->download('Reporte de Encuesta.pdf');
+    }
+
+    public function exportExcel() {
+        
     }
 }
