@@ -12,9 +12,12 @@
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-4">
                                 <label for="">
-                                    <button class="text-indigo-600 hover:text-indigo-900 bg-purple-100 rounded-lg py-1 px-3">Ver encuestas</button>
-                                    o    
-                                    <button class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3">editar encuestas</button>
+                                    <a 
+                                        href="{{ route('encuesta.create') }}" 
+                                        class="text-blue-600 hover:text-blue-900 bg-sky-100 rounded-lg py-1 px-9"
+                                    >
+                                        Gestionar Encuesta
+                                    </a>
                                 </label>
                             </div>
                         </div>
@@ -30,7 +33,7 @@
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-4">
                                 <label for="">Seleccione un periodo o 
-                                    <button class="text-indigo-600 hover:text-indigo-900 bg-purple-100 rounded-lg py-1 px-3">descargue todas las encuestas</button>
+                                    <a href="{{ route('encuesta.show') }}" class="text-blue-600 hover:text-blue-900 bg-sky-100 rounded-lg py-1 px-3">descargue todas las encuestas</a>
                                 </label>
                             </div>
                         </div>
@@ -47,7 +50,7 @@
                             <option value="Agosto-Diciembre">Agosto - Diciembre</option>
                         </select>
                         <div class="px-6 py-1 whitespace-nowrap text-right">
-                            <button class="px-6 py-4 whitespace-nowrap text-right px-4 text-indigo-600 hover:text-indigo-900 bg-purple-100 rounded-lg py-1 px-3">Descargar</button>
+                            <button class="px-6 py-2 whitespace-nowrap text-right px-4 text-blue-600 hover:text-blue-900 bg-sky-100 rounded-lg py-1 px-3">Descargar</button>
                         </div>
                     </div>
                 </form>
@@ -63,7 +66,7 @@
                             <label class="px-3" for="">Fecha Final:</label>
                             <input class="rounded-lg py-1 px-3" type="date" name="" id="">
                             <div class="px-6 py-1 whitespace-nowrap text-left">
-                                <button class="px-6 whitespace-nowrap text-right px-4 text-indigo-600 hover:text-indigo-900 bg-purple-100 rounded-lg py-1 px-3">Descargar</button>
+                                <button class="px-6 whitespace-nowrap text-right px-4 text-blue-600 hover:text-blue-900 bg-sky-100 rounded-lg py-1 px-3">Descargar</button>
                             </div>
                         </div>
                     </div>
