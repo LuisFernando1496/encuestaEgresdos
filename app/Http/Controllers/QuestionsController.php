@@ -61,7 +61,7 @@ class QuestionsController extends Controller
         $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
         //  return $questions[19]->subQuestion;
     
-        return view('encuesta.index', compact('questions')->get());
+        return view('encuesta.index', compact('questions'));
     }
 
 
@@ -83,8 +83,10 @@ class QuestionsController extends Controller
     }
 
     public function exportPDF() {
-        //$encuesta = \PDF::loadView('encuesta.plantilla_reporte');
-        //return $pdf->download('Reporte de Encuesta.pdf');
+        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
+        
+        $pdf = \PDF::loadView('encuesta.plantilla_reporte', compact('questions'));
+        return $pdf->download('Reporte_de_Encuesta.pdf');
     }
 
     public function exportExcel() {

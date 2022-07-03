@@ -13,12 +13,9 @@
                 <br>
                 <div class="flex-col flex">
                     <div class="block">
-                        <button class="text-red-600 hover:text-red-900 bg-purple-100 rounded-lg py-1 px-3 float-left" href="#"">
-                            Exportar PDF
-                        </button>
-                        <button class="text-green-600 hover:text-green-900 bg-purple-100 rounded-lg py-1 px-3 float-right" href="#"">
-                            Exportar Excel
-                        </button>
+                        <a class="text-yellow-600 hover:text-yellow-900 bg-yellow-100 rounded-lg py-1 px-3 float-left" href="{{ route('encuesta.create') }}">
+                            Editar
+                        </a>
                     </div>
                 </div>
                   

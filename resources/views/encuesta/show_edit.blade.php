@@ -1,5 +1,5 @@
 <x-app-layout>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Quiz') }}
@@ -60,23 +60,21 @@
                             </div>
                         </form>
                         <label for="" class="px-3">Respuestas</label><br><br>
-                        <form action="{{ route('answers.update', $answer->id) }}" method="post">
-                        @csrf
-                            @foreach ($pregunta->answers as $item => $answer)
-                                <div class="inline-flex rounded-md">
-                                    <input type="hidden" name="question_id" value="{{ $answer->question_id }}"/>
-                                    <input type="text" name="option" value="{{ $answer->option }}" class="form-input rounded-md shadow-sm mt-1 block w-full" id="respuesta{{ $answer->id }}"/>
-                                    <div class="px-6 py-1 whitespace-nowrap text-right">
-                                        <button 
-                                            class="px-6 py-2 whitespace-nowrap text-right px-4 text-orange-600 hover:text-orange-900 bg-yellow-100 rounded-lg py-1 px-3"
-                                            id="btnRespuesta"
-                                        >
-                                            Editar    
-                                        </button>
-                                    </div>
+                        @foreach ($pregunta->answers as $item => $answer)
+                            <form class="inline-flex rounded-md" action="{{ route('answers.update', $answer->id) }}" method="post">
+                            @csrf   
+                                <input type="hidden" name="question_id" value="{{ $answer->question_id }}"/>
+                                <input type="text" name="option" value="{{ $answer->option }}" class="form-input rounded-md shadow-sm mt-1 block w-full" id="respuesta{{ $answer->id }}"/>
+                                <div class="px-6 py-1 whitespace-nowrap text-right">
+                                    <button 
+                                        class="px-6 py-2 whitespace-nowrap text-right px-4 text-orange-600 hover:text-orange-900 bg-yellow-100 rounded-lg py-1 px-3"
+                                        type="submit"
+                                    >
+                                        Editar    
+                                    </button>
                                 </div>
-                            @endforeach
-                        </form>
+                            </form>
+                        @endforeach
                     </div>
                 </div>
             </div>
