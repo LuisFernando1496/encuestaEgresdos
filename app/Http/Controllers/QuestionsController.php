@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Questions;
+use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
 
 class QuestionsController extends Controller
@@ -73,7 +74,9 @@ class QuestionsController extends Controller
 
     public function update(Request $request, $id)
     {
-        
+        $questions = Questions::find($id);
+        $questions->update($request->all());
+        return back();
     }
 
 
@@ -82,7 +85,8 @@ class QuestionsController extends Controller
         //
     }
 
-    public function exportPDF() {
+    public function exportPDF(Request $request) {
+        $alumno_id = ContactInformation::where('enrollment', $request['num_control'])->get();
         $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
         
         $pdf = \PDF::loadView('encuesta.plantilla_reporte', compact('questions'));

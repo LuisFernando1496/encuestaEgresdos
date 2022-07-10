@@ -6,77 +6,90 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+       
 </head>
 <style>
-    .logo{
+    .logo_izq{
         float: left; 
         width: 100px;
     }
+    .logo_der{
+        float: right; 
+        width: 100px;
+    }
+    .titulo_centro {
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 15px;
+        overflow: auto;
+    }
+    .data-center-items{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .hr-item{
+        margin-top: 20px;
+        color: blue;
+    }
+    .center-items{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: blue solid;
+    }
+    .answer-items{
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        text-align: left;
+    }
 </style>
 <body>
-    <div class="center-items">
-        <img class="logo" src="" alt="imagen">
-        <h2>
-            Reporte de 
-        </h2>
+    <div class="data-center-items">
+        <img class="logo_izq" src="{{ asset('img/logo_tec.jpg') }}">
+        <h5 class="titulo_centro">Instituto Tecnológico De México (Tuxtla Gutiérrez)</h5>
+        <img class="logo_der" src="">
     </div>
-    <hr>
-    @forelse ($questions as $i => $pregunta)
-        @if ($i == 0)
-            <div class="text-center text-xl leading-7 font-semibold text-indigo-50 bg-indigo-900">
-                {{ $pregunta->categoryQuestion->name }}
-            </div>
-            <hr class="border-indigo-900">
-            <br>
-        @else
-            @if ($questions[$i - 1]->categoryQuestion->name != $pregunta->categoryQuestion->name)
-                <div class="text-center text-xl leading-7 font-semibold  text-indigo-50 bg-indigo-900">
-                    {{ $pregunta->categoryQuestion->name }} </div>
-                <hr class="border-indigo-900">
-                <br>
+    <div class="center-items">
+        <h4>Datos Del Egresado</h4>
+        <label>N° de Control: </label><br>
+        <label>Nombre: </label><br>
+        <label>Carrera: </label>
+    </div>
+    <div class="center-items">
+        @forelse ($questions as $i => $pregunta)
+            @if ($i == 0)
+                <hr class="hr-item">
+                <div>
+                    {{ $pregunta->categoryQuestion->name }}
+                </div>
+                <hr class="hr-item">
             @else
+                @if ($questions[$i - 1]->categoryQuestion->name != $pregunta->categoryQuestion->name)
+                    <hr class="hr-item">
+                    <div>
+                        {{ $pregunta->categoryQuestion->name }}
+                    </div>
+                    <hr class="hr-item">
+                @else
+                @endif
             @endif
-        @endif
-        <br>
-        <div class="">  
-            <!-- Preguntas -->
-            <div class=" text-center  ml-4 text-md leading-7 font-semibold">{{$i +1}}.- {{ $pregunta->question }}</div>
-            <div class=" text-gray-600 dark:text-gray-400 text-sm ">
-                <div class="form-check">
-                    <div class="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-4 text-center "
-                        id="divGrid{{ $pregunta->id }}">
-                        <!-- Respuestas -->
-                        @foreach ($pregunta->answers as $item => $answer)
-                            <div class="border-solid border-2 border-indigo-900  hover:bg-indigo-400 hover:text-indigo-50 m-5 p-5 rounded-lg text-left"
-                                onclick="option(answer={{ $answer }}, pregunta = {{ $pregunta->id }})"
-                                id="divOption{{ $answer->id }}" style="cursor: pointer">
-
-                                <input type="hidden" name="category{{$pregunta->id}}" value="{{$pregunta->categoryQuestion->name}}">
-
-                                <input class="form-check-input" type="radio"
-                                    name="pregunta{{ $pregunta->id }}" id="{{ $answer->id }}"
-                                    value="{{ $answer->option }}" >
-                                <label class="form-check-label" for="{{ $answer->id }}">
-                                    {{ $answer->option }}</label>
-
-                            </div>
-                        @endforeach
-
-                        @if ($pregunta->subQuestion)
-                            <br>
-                            @foreach ($pregunta->subQuestion as $item)
-                                <div class="ml-4 text-sm leading-7 font-semibold">
-                                    {{ $item->question }}
-                                </div>
-                            @endforeach
-                        @endif
+            <div class="">  
+                <!-- Preguntas -->
+                <hr><div>{{ $pregunta->question }}</div><hr>
+                <div>
+                    <!-- Respuestas -->
+                    <div class="answer-items">
+                        <label>Respuesta. </label>
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <br>
-    @empty
-    @endforelse 
+        @empty
+        @endforelse
+    </div>
 </body>
 </html>
