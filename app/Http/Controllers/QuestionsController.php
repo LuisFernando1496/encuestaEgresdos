@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Questions;
+use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
 
 class QuestionsController extends Controller
@@ -12,17 +13,15 @@ class QuestionsController extends Controller
 
     public function index()
     {
-        //$questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
-        //  return $questions[19]->subQuestion;
-        
-       // return view('encuesta.index', compact('questions'));
-       return view('encuesta.menu_admin');
+        return view('encuesta.menu_admin');
     }
 
 
     public function create()
     {
+        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
         
+        return view('encuesta.show_edit', compact('questions'));
     }
 
 
@@ -58,9 +57,12 @@ class QuestionsController extends Controller
     }
 
 
-    public function show(Questions $questions)
+    public function show()
     {
-        //
+        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
+        //  return $questions[19]->subQuestion;
+    
+        return view('encuesta.index', compact('questions'));
     }
 
 
@@ -70,14 +72,28 @@ class QuestionsController extends Controller
     }
 
 
-    public function update(Request $request, Questions $questions)
+    public function update(Request $request, $id)
     {
-        //
+        $questions = Questions::find($id);
+        $questions->update($request->all());
+        return back();
     }
 
 
     public function destroy(Questions $questions)
     {
         //
+    }
+
+    public function exportPDF(Request $request) {
+        $alumno_id = ContactInformation::where('enrollment', $request['num_control'])->get();
+        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
+        
+        $pdf = \PDF::loadView('encuesta.plantilla_reporte', compact('questions'));
+        return $pdf->download('Reporte_de_Encuesta.pdf');
+    }
+
+    public function exportExcel() {
+        
     }
 }

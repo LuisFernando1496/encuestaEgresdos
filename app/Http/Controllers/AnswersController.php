@@ -68,9 +68,11 @@ class AnswersController extends Controller
      * @param  \App\Models\Answers  $answers
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAnswersRequest $request, Answers $answers)
+    public function update(UpdateAnswersRequest $request, $id)
     {
-        //
+        $answers = Answers::find($id);
+        $answers->update($request->all());
+        return back();
     }
 
     /**
