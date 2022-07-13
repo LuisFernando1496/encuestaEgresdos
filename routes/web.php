@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\JobsController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +36,4 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::post('/imprimir_encuesta', [QuestionsController::class, 'exportPDF'])->name('encuesta.imprimir');
     Route::get('/studens',[UsersController::class, 'indexStudents'])->name('studens');
     Route::get('/graduates',[UsersController::class, 'indexGraduates'])->name('graduates');
-
-    Route::get('/jobs',[JobsController::class,'index'])->name('jobs.index');
 });

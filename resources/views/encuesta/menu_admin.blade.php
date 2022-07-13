@@ -51,6 +51,7 @@
                                     </select>
                                     <label class="px-4">Ingrese numero de control:</label>
                                     <input class="rounded-lg py-1 px-3" type="text" name="num_control" id="id_control" placeholder="">
+                                    <input type="hidden" name="fileExport" value="">
                                 </div>
                             </div>
                         </div>
@@ -65,10 +66,10 @@
                             <option value="Agosto-Diciembre">Agosto - Diciembre</option>
                         </select>
                         <div class="px-6 py-1 whitespace-nowrap text-right">
-                            <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit">
+                            <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonPDF();">
                                 Exportar PDF
                             </button>
-                            <!-- <button class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit">
+                            <!-- <button class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonEXCEL();">
                                 Exportar Excel
                             </button> -->
                         </div>
@@ -84,10 +85,10 @@
                             <label class="px-3" for="">Fecha Final:</label>
                             <input class="rounded-lg py-1 px-3" type="date" name="fecha_fin" id="fecha_final">
                             <div class="px-6 py-1 whitespace-nowrap text-left">
-                                <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit">
+                                <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonPDF();">
                                     Exportar PDF
                                 </button>
-                                <!-- <a class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit">
+                                <!-- <a class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonEXCEL();">
                                     Exportar Excel
                                 </a> -->
                             </div>
@@ -98,4 +99,12 @@
             </div>
         </form>
     </div>
+    <script>
+    function buttonPDF() {
+        $('input[name="fileExport"]').val('PDF');
+    }
+    function buttonEXCEL() {
+        $('input[name="fileExport"]').val('EXCEL');
+    }
+    </script>
 </x-app-layout>
