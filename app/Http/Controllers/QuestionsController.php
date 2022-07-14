@@ -92,7 +92,7 @@ class QuestionsController extends Controller
                 Export::exportPDF($request);
                 break;
             case 'EXCEL':
-                //EXCEL_Export::exportEXCEL($request);
+                Export::exportEXCEL($request);
                 break;
             default:
                 # code...

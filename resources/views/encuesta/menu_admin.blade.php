@@ -62,16 +62,16 @@
                     <div class="inline-flex">
                         <select name="periodoEscolar" id="perdiodo_escolar" class="rounded-lg py-1 px-3">
                             <option value="">- Periodo -</option>
-                            <option value="Enero-Agosto">Enero - Junio</option>
+                            <option value="Enero-Junio">Enero - Junio</option>
                             <option value="Agosto-Diciembre">Agosto - Diciembre</option>
                         </select>
                         <div class="px-6 py-1 whitespace-nowrap text-right">
                             <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonPDF();">
                                 Exportar PDF
                             </button>
-                            <!-- <button class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonEXCEL();">
+                            <button class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonEXCEL();">
                                 Exportar Excel
-                            </button> -->
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -88,9 +88,9 @@
                                 <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonPDF();">
                                     Exportar PDF
                                 </button>
-                                <!-- <a class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonEXCEL();">
+                                <button class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonEXCEL();">
                                     Exportar Excel
-                                </a> -->
+                                </button>
                             </div>
                         </div>
                     </div>

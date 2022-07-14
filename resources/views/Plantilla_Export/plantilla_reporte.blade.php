@@ -54,7 +54,7 @@
         <h5 class="titulo_centro">Instituto Tecnológico De México (Tuxtla Gutiérrez)</h5>
         <img class="logo_der" src="">
     </div>
-    @foreach($datos as $data_r)
+    @foreach($data as $data_r)
         <div class="center-items">
             <h4>Datos Del Egresado</h4>
             <label>N° de Control: {{ $data_r->num_control }}</label><br>
