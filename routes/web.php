@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobsController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
