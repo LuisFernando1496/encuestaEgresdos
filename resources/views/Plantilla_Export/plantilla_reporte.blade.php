@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
        
 </head>
@@ -54,42 +54,38 @@
         <h5 class="titulo_centro">Instituto Tecnológico De México (Tuxtla Gutiérrez)</h5>
         <img class="logo_der" src="">
     </div>
-    <div class="center-items">
-        <h4>Datos Del Egresado</h4>
-        <label>N° de Control: </label><br>
-        <label>Nombre: </label><br>
-        <label>Carrera: </label>
-    </div>
-    <div class="center-items">
-        @forelse ($questions as $i => $pregunta)
-            @if ($i == 0)
-                <hr class="hr-item">
-                <div>
-                    {{ $pregunta->categoryQuestion->name }}
-                </div>
-                <hr class="hr-item">
-            @else
-                @if ($questions[$i - 1]->categoryQuestion->name != $pregunta->categoryQuestion->name)
-                    <hr class="hr-item">
-                    <div>
-                        {{ $pregunta->categoryQuestion->name }}
-                    </div>
-                    <hr class="hr-item">
-                @else
-                @endif
-            @endif
+    @foreach($data as $data_r)
+        <div class="center-items">
+            <h4>Datos Del Egresado</h4>
+            <label>N° de Control: {{ $data_r->num_control }}</label><br>
+            <label>Nombre: </label><br>
+            <label>Carrera: </label>
+        </div>
+        <div class="center-items">
+            <hr class="hr-item">
+            <div>
+                {{ $data_r->category }}
+            </div>
+            <hr class="hr-item">
+            <!-- <hr class="hr-item"> -->
+            <!-- <hr class="hr-item"> -->
             <div class="">  
-                <!-- Preguntas -->
-                <hr><div>{{ $pregunta->question }}</div><hr>
-                <div>
+            <!-- Preguntas -->
+            <hr><div>{{ $data_r->question }}</div><hr>
+            <div>
                     <!-- Respuestas -->
                     <div class="answer-items">
-                        <label>Respuesta. </label>
+                        @if($data_r->answer_num != "")
+                            <label>{{ $data_r->answer_num }}</label>
+                        @elseif($data_r->answer_text != "")
+                            <label>{{ $data_r->answer_text }}</label>
+                        @elseif($data_r->answer_specify != "")
+                            <label>{{ $data_r->answer_specify }}</label>
+                        @endif
                     </div>
                 </div>
             </div>
-        @empty
-        @endforelse
-    </div>
+        </div>
+    @endforeach
 </body>
 </html>

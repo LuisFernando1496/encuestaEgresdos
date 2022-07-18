@@ -17,7 +17,7 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('jobs.index') }}" :active="request()->routeIs('Job Bank')">
+                    <x-jet-nav-link href="" :active="request()->routeIs('Job Bank')">
                         {{ __('Job Bank') }}
                     </x-jet-nav-link>
                 </div>
@@ -168,13 +168,13 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('jobs.index') }}" :active="request()->routeIs('Job Bank')">
+            <x-jet-responsive-nav-link href="" :active="request()->routeIs('Job Bank')">
                 {{ __('Job Bank') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('Extracurricular Activities')">
                 {{ __('Extracurricular Activities') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('Quiz')">
+            <x-jet-responsive-nav-link href="{{ route('encuesta') }}" :active="request()->routeIs('Quiz')">
                 {{ __('Quiz') }}
             </x-jet-responsive-nav-link>
         </div>

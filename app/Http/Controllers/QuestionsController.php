@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Questions;
 use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
+use App\Export\Export;
 
 class QuestionsController extends Controller
 {
@@ -85,15 +86,17 @@ class QuestionsController extends Controller
         //
     }
 
-    public function exportPDF(Request $request) {
-        $alumno_id = ContactInformation::where('enrollment', $request['num_control'])->get();
-        $questions = Questions::where('status', true)->whereNull('question_id')->with('answers', 'categoryQuestion')->get();
-        
-        $pdf = \PDF::loadView('encuesta.plantilla_reporte', compact('questions'));
-        return $pdf->download('Reporte_de_Encuesta.pdf');
-    }
-
-    public function exportExcel() {
-        
+    public function export(Request $request) {
+        switch ($request['fileExport']) {
+            case 'PDF':
+                Export::exportPDF($request);
+                break;
+            case 'EXCEL':
+                Export::exportEXCEL($request);
+                break;
+            default:
+                # code...
+                break;
+        }
     }
 }
