@@ -15,7 +15,7 @@ class CreateCategoryQuestionsTable extends Migration
     {
         Schema::create('category_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->longText('name');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

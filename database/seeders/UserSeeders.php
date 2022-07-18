@@ -22,7 +22,7 @@ class UserSeeders extends Seeder
         $users->each(function($user) use ($role){
             $user->role()->attach($role->id);
         });
-        User::create([
+        $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'graduated'=> 0 ,
@@ -31,5 +31,6 @@ class UserSeeders extends Seeder
             'remember_token' => Str::random(10),
 
         ]);
+        $admin->role()->attach(1);
     }
 }

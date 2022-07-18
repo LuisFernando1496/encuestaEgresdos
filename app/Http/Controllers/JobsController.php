@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jobs;
-use App\Http\Requests\StoreJobsRequest;
-use App\Http\Requests\UpdateJobsRequest;
+use Illuminate\Http\Request;
 
 class JobsController extends Controller
 {
@@ -15,7 +14,8 @@ class JobsController extends Controller
      */
     public function index()
     {
-        return view('jobs.index');
+        $jobs = Jobs::where('status', true)->paginate(8);
+        return view('jobs.index', compact('jobs'));
     }
 
     /**
@@ -25,7 +25,7 @@ class JobsController extends Controller
      */
     public function create()
     {
-        //
+        return view('jobs.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class JobsController extends Controller
      * @param  \App\Http\Requests\StoreJobsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreJobsRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -58,7 +58,7 @@ class JobsController extends Controller
      */
     public function edit(Jobs $jobs)
     {
-        //
+        return view('jobs.edit', compact('jobs'));
     }
 
     /**
@@ -68,9 +68,32 @@ class JobsController extends Controller
      * @param  \App\Models\Jobs  $jobs
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJobsRequest $request, Jobs $jobs)
+    public function update(Request $request, Jobs $jobs)
     {
-        //
+
+        //$request['image']='hola';
+        if ($request->image) {
+            $imegnName = $request->image->getClientOriginalName();
+            $imagen = $request->file('image');
+            $type = pathinfo($imegnName, PATHINFO_EXTENSION);
+            $img = file_get_contents($imagen);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($img);
+        }
+        else{
+            $base64 = $jobs->image;
+        }
+
+        $jobs->update([
+            'name_enterprise'=> $request->name_enterprise,
+            'market_stall' => $request->market_stall,
+            'description' => $request->description,
+            'city_origin' => $request->city_origin,
+            'workday' => $request->workday,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'image' => $base64
+        ]);
+        return redirect()->route('jobs.index');
     }
 
     /**
@@ -81,6 +104,9 @@ class JobsController extends Controller
      */
     public function destroy(Jobs $jobs)
     {
-        //
+        $jobs->update([
+            'status'=>false
+        ]);
+        return redirect()->route('jobs.index');
     }
 }
