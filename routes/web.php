@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UsersController;
@@ -45,4 +46,12 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/jobs/editar/{jobs}',[JobsController::class,'edit'])->name('jobs.edit');
     Route::put('/jobs/{jobs}',[JobsController::class,'update'])->name('jobs.update');
     Route::get('/jobs/eliminar/{jobs}',[JobsController::class,'destroy'])->name('jobs.destroy');
+    
+    Route::get('/activity',[ActivityController::class,'index'])->name('activity.index'); 
+    Route::get('/activity/create',[ActivityController::class,'create'])->name('activity.create');
+    Route::post('/activity/crear',[ActivityController::class,'store'])->name('activity.store');
+    Route::get('/activity/show/{activity}',[ActivityController::class,'show'])->name('activity.show');
+    Route::get('/activity/editar/{activity}',[ActivityController::class,'edit'])->name('activity.edit');
+    Route::put('/activity/{activity}',[ActivityController::class,'update'])->name('activity.update');
+    Route::get('/activity/eliminar/{activity}',[ActivityController::class,'destroy'])->name('activity.destroy');
 });

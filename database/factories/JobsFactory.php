@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class JobsFactory extends Factory
@@ -18,7 +19,7 @@ class JobsFactory extends Factory
             'market_stall' => $this->faker->name,
             'description' => $this->faker->text(),
             'city_origin' => $this->faker->address(),
-            'workday'=> $this->faker->text(),
+            'workday'=> Carbon::now(),
             'phone_number' => 96115853,
             'email'=> $this->faker->email,
             'image' =>defaultImg()

@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             QuestionsSeeder::class,
             AnswersSeeder::class, 
             ContactInformationSeeder::class,
-            JobsSeeder::class
+            JobsSeeder::class,
+            ActivitySeeder::class
             ]);
     }
 }
