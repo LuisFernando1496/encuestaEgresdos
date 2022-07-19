@@ -36,7 +36,28 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->image) {
+            $imegnName = $request->image->getClientOriginalName();
+            $imagen = $request->file('image');
+            $type = pathinfo($imegnName, PATHINFO_EXTENSION);
+            $img = file_get_contents($imagen);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($img);
+        }
+        else{
+            $base64 = defaultImg();//$jobs->image;
+        }
+
+        $jobs = Jobs::create([
+            'name_enterprise'=> $request->name_enterprise,
+            'market_stall' => $request->market_stall,
+            'description' => $request->description,
+            'city_origin' => $request->city_origin,
+            'workday' => $request->workday,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'image' => $base64
+        ]);
+        return redirect()->route('jobs.index');
     }
 
     /**
@@ -47,7 +68,7 @@ class JobsController extends Controller
      */
     public function show(Jobs $jobs)
     {
-        //
+        return view('jobs.show',compact('jobs'));
     }
 
     /**

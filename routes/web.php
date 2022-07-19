@@ -41,7 +41,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/jobs',[JobsController::class,'index'])->name('jobs.index'); 
     Route::get('/jobs/create',[JobsController::class,'create'])->name('jobs.create');
     Route::post('/jobs/crear',[JobsController::class,'store'])->name('jobs.store');
-    Route::get('/jobs/show',[JobsController::class,'show'])->name('jobs.show');
+    Route::get('/jobs/show/{jobs}',[JobsController::class,'show'])->name('jobs.show');
     Route::get('/jobs/editar/{jobs}',[JobsController::class,'edit'])->name('jobs.edit');
     Route::put('/jobs/{jobs}',[JobsController::class,'update'])->name('jobs.update');
     Route::get('/jobs/eliminar/{jobs}',[JobsController::class,'destroy'])->name('jobs.destroy');

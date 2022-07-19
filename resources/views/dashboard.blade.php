@@ -6,40 +6,86 @@
         </h2>
     </x-slot>
 
+    @php
+        $jobs = App\Models\Jobs::where('status', true)
+            ->orderBy('id', 'DESC')
+            ->take(5)
+            ->get();
+    @endphp
+
     <div class="py-12">
-      
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mx-auto text-center">
-                <div class="sliderAx h-auto">
-                    <div id="slider-1" class="container mx-auto">
-                      <div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="background-image: url(https://images.unsplash.com/photo-1544427920-c49ccfb85579?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1422&q=80)">
-                     <div class="md:w-1/2">
-                      <p class="font-bold text-sm uppercase">Services</p>
-                      <p class="text-3xl font-bold">Hello world</p>
-                      <p class="text-2xl mb-10 leading-none">Carousel with TailwindCSS and jQuery</p>
-                      <a href="#" class="bg-purple-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Contact us</a>
-                      </div>  
-                  </div> <!-- container -->
-                    <br>
+
+                <div id="indicators-carousel" class="relative" data-carousel="static">
+                    <!-- Carousel wrapper -->
+                    <div class="overflow-hidden relative h-56 rounded-lg md:h-96">
+                        @forelse ($jobs as $job)
+                            <!-- Item 1 -->
+                            <a href="{{route('jobs.show',$job)}}">
+                            <div class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 z-20"
+                                data-carousel-item>
+                               
+                                <img src="{{$job->image}}"
+                                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
+                                    alt="...">
+                            </div> 
+                            </a>
+                        @empty
+                        @endforelse
+
+
                     </div>
-              
-                    <div id="slider-2" class="container mx-auto">
-                      <div class="bg-cover bg-top  h-auto text-white py-24 px-10 object-fill" style="background-image: url(https://images.unsplash.com/photo-1544144433-d50aff500b91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)">
-                     
-                <p class="font-bold text-sm uppercase">Services</p>
-                      <p class="text-3xl font-bold">Hello world</p>
-                      <p class="text-2xl mb-10 leading-none">Carousel with TailwindCSS and jQuery</p>
-                      <a href="#" class="bg-purple-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Contact us</a>
-                       
-                  </div> <!-- container -->
-                    <br>
+                    <!-- Slider indicators -->
+                    <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
+                        <button type="button" class="w-3 h-3 rounded-full bg-white dark:bg-gray-800"
+                            aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
                     </div>
-                  </div>
-               <div  class="flex justify-between w-12 mx-auto pb-2">
-                      <button id="sButton1" onclick="sliderButton1()" class="bg-purple-400 rounded-full w-4 pb-2 " ></button>
-                  <button id="sButton2" onclick="sliderButton2() " class="bg-purple-400 rounded-full w-4 p-2"></button>
+                    <!-- Slider controls -->
+                    <button type="button"
+                        class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
+                        data-carousel-prev="">
+                        <span
+                            class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            <span class="sr-only">Previous</span>
+                        </span>
+                    </button>
+                    <button type="button"
+                        class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
+                        data-carousel-next="">
+                        <span
+                            class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                            <span class="sr-only">Next</span>
+                        </span>
+                    </button>
                 </div>
-               
+             
+
                 <br>
                 <div class="inline-flex my-1">
                     <img class="mx-auto my-1" src="{{ asset('img/logo_tec.jpg') }}" alt="welcome" width="50px">
@@ -48,81 +94,95 @@
                     </span>
                 </div>
             </div>
-            </div>
-
-
-
         </div>
+
+
+
     </div>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-    <script>
-        var cont = 0;
-        var xx =0;
-        function loopSlider() {
-             xx = setInterval(function() {
-                switch (cont) {
-                    case 0: {
-                        $("#slider-1").fadeOut(400);
-                        $("#slider-2").delay(400).fadeIn(400);
-                        $("#sButton1").removeClass("bg-purple-800");
-                        $("#sButton2").addClass("bg-purple-800");
-                        cont = 1;
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mx-auto text-center">
 
-                        break;
-                    }
-                    case 1: {
-
-                        $("#slider-2").fadeOut(400);
-                        $("#slider-1").delay(400).fadeIn(400);
-                        $("#sButton2").removeClass("bg-purple-800");
-                        $("#sButton1").addClass("bg-purple-800");
-
-                        cont = 0;
-
-                        break;
-                    }
+                <div id="indicators-carousel" class="relative" data-carousel="static">
+                    <!-- Carousel wrapper -->
+                    <div class="overflow-hidden relative h-56 rounded-lg md:h-96">
+                        @forelse ($jobs as $job)
+                            <!-- Item 1 -->
+                            <a href="{{route('jobs.show',$job)}}">
+                            <div class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 z-20"
+                                data-carousel-item>
+                               
+                                <img src="{{$job->image}}"
+                                    class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
+                                    alt="...">
+                            </div> 
+                            </a>
+                        @empty
+                        @endforelse
 
 
-                }
-            }, 8000);
+                    </div>
+                    <!-- Slider indicators -->
+                    <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
+                        <button type="button" class="w-3 h-3 rounded-full bg-white dark:bg-gray-800"
+                            aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+                        <button type="button"
+                            class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
+                            aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
+                    </div>
+                    <!-- Slider controls -->
+                    <button type="button"
+                        class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
+                        data-carousel-prev="">
+                        <span
+                            class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            <span class="sr-only">Previous</span>
+                        </span>
+                    </button>
+                    <button type="button"
+                        class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
+                        data-carousel-next="">
+                        <span
+                            class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                            <span class="sr-only">Next</span>
+                        </span>
+                    </button>
+                </div>
+             
 
-        }
-
-        function reinitLoop(time) {
-            clearInterval(xx);
-            setTimeout(loopSlider(), time);
-        }
-
-
-
-        function sliderButton1() {
-
-            $("#slider-2").fadeOut(400);
-            $("#slider-1").delay(400).fadeIn(400);
-            $("#sButton2").removeClass("bg-purple-800");
-            $("#sButton1").addClass("bg-purple-800");
-            reinitLoop(4000);
-            cont = 0
-
-        }
-
-        function sliderButton2() {
-            $("#slider-1").fadeOut(400);
-            $("#slider-2").delay(400).fadeIn(400);
-            $("#sButton1").removeClass("bg-purple-800");
-            $("#sButton2").addClass("bg-purple-800");
-            reinitLoop(4000);
-            cont = 1
-
-        }
-
-        $(window).ready(function() {
-            $("#slider-2").hide();
-            $("#sButton1").addClass("bg-purple-800");
+                <br>
+                <div class="inline-flex my-1">
+                    <img class="mx-auto my-1" src="{{ asset('img/logo_tec.jpg') }}" alt="welcome" width="50px">
+                    <span class="px-10 my-4 text-lg">
+                        Ser una Institución de Excelencia en la Educación Superior Tecnológica del Sureste.
+                    </span>
+                </div>
+            </div>
+        </div>
 
 
-            loopSlider();
 
-        });
-    </script>
+    </div>
+    </div>
+    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </x-app-layout>
