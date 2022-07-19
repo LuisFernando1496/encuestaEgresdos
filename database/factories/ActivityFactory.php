@@ -19,7 +19,7 @@ class ActivityFactory extends Factory
             'fecha_event' => Carbon::now(),
             'description' => $this->faker->text(),
             'place'=> $this->faker->city(),
-            'image' => defaultImg(),
+            'image' => defaultImgEvents(),
         ];
     }
 }

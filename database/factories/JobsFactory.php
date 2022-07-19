@@ -22,7 +22,7 @@ class JobsFactory extends Factory
             'workday'=> Carbon::now(),
             'phone_number' => 96115853,
             'email'=> $this->faker->email,
-            'image' =>defaultImg()
+            'image' =>defaultImgJobs()
         ];
     }
 }

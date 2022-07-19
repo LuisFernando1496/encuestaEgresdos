@@ -45,7 +45,7 @@ class ActivityController extends Controller
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($img);
         }
         else{
-            $base64 = defaultImg();//$jobs->image;
+            $base64 = defaultImgEvents();//$jobs->image;
         }
 
         $jobs = Activity::create([
