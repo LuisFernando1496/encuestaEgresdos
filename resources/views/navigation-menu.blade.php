@@ -17,13 +17,18 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{route('jobs.index')}}" :active="request()->routeIs('Job Bank')">
-                        {{ __('Job Bank') }}
+                    <x-jet-nav-link href="{{route('jobs.index')}}" :active="request()->routeIs('jobs.index')">
+                        {{ __('Job Bank') }} 
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('activity.index') }}" :active="request()->routeIs('Events')">
+                    <x-jet-nav-link href="{{ route('activity.index') }}" :active="request()->routeIs('activity.index')">
                         {{ __('Events') }}
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('education.index') }}" :active="request()->routeIs('education.index')">
+                        {{ __('Continuing Education') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

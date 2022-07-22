@@ -14,7 +14,7 @@ class JobsController extends Controller
      */
     public function index()
     {
-        $jobs = Jobs::where('status', true)->paginate(8);
+        $jobs = Jobs::where('status', true)->orderBY('id','DESC')->paginate(8);
         return view('jobs.index', compact('jobs'));
     }
 

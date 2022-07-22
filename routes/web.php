@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ContinuingEducationController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UsersController;
@@ -54,4 +55,12 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/activity/editar/{activity}',[ActivityController::class,'edit'])->name('activity.edit');
     Route::put('/activity/{activity}',[ActivityController::class,'update'])->name('activity.update');
     Route::get('/activity/eliminar/{activity}',[ActivityController::class,'destroy'])->name('activity.destroy');
+
+    Route::get('/continuingEducation',[ContinuingEducationController::class,'index'])->name('education.index'); 
+    Route::get('/continuingEducation/create',[ContinuingEducationController::class,'create'])->name('education.create');
+    Route::post('/continuingEducation/crear',[ContinuingEducationController::class,'store'])->name('education.store');
+    Route::get('/continuingEducation/show/{continuingEducation}',[ContinuingEducationController::class,'show'])->name('education.show');
+    Route::get('/continuingEducation/editar/{continuingEducation}',[ContinuingEducationController::class,'edit'])->name('education.edit');
+    Route::put('/continuingEducation/{continuingEducation}',[ContinuingEducationController::class,'update'])->name('education.update');
+    Route::get('/continuingEducation/eliminar/{continuingEducation}',[ContinuingEducationController::class,'destroy'])->name('education.destroy');
 });
