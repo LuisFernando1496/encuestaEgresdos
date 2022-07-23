@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ContinuingEducationController;
 use App\Http\Controllers\JobsController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -63,4 +64,6 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/continuingEducation/editar/{continuingEducation}',[ContinuingEducationController::class,'edit'])->name('education.edit');
     Route::put('/continuingEducation/{continuingEducation}',[ContinuingEducationController::class,'update'])->name('education.update');
     Route::get('/continuingEducation/eliminar/{continuingEducation}',[ContinuingEducationController::class,'destroy'])->name('education.destroy');
+
+    Route::get('/messages',[MessagesController::class,'index'])->name('messages.index');
 });

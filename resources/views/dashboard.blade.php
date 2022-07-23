@@ -1,10 +1,6 @@
 <x-app-layout>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+   
 
     @php
         $jobs = App\Models\Jobs::where('status', true)
@@ -22,10 +18,10 @@
             ->take(5)
             ->get();
     @endphp
+<div class="bg-blue-900">
+    <div class="py-12 ">
 
-    <div class="py-12">
-
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mx-auto text-center">
 
                 <div id="indicators-carousel" class="relative" data-carousel="slide">
@@ -269,6 +265,6 @@
     </div>
     </div>
 
-
+</div>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </x-app-layout>
