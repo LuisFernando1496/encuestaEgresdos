@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Questions;
 use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
-use App\Export\Export;
+use App\Export\PDFExport;
+use App\Export\ExcelExport;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QuestionsController extends Controller
 {
@@ -87,16 +90,52 @@ class QuestionsController extends Controller
     }
 
     public function export(Request $request) {
+        dd($request);
         switch ($request['fileExport']) {
             case 'PDF':
-                Export::exportPDF($request);
+                $data = PDFExport::Export($request);
+
+                $date = Carbon::now();
+                $title = "Reporte_$date.pdf";
+
+                dd($data);
                 break;
             case 'EXCEL':
-                Export::exportEXCEL($request);
+                ExcelExport::takeValues($request);
+
+                $date = Carbon::now();
+                $title = "Reporte_$date.xlsx";
+                
+                return Excel::download(new ExcelExport, 'title');
                 break;
             default:
                 # code...
                 break;
         }
+    }
+
+    public function seePDF() {
+        $data = $this->getData;
+
+        $date = Carbon::now();
+        $title = "Reporte_$date.pdf";
+
+        return view('encuesta.charts_image', compact('data', 'title'));
+    }
+
+    public function seeExcel() {
+        $data = $this->getData;
+
+        $date = Carbon::now();
+        $title = "Reporte_$date.xlsx";
+
+        return view('encuesta.charts_image', compact('data', 'title'));
+    }
+
+    public function exportDoc(Request $request) {
+        //code...
+
+        $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
+        return $pdf->download('title');
     }
 }

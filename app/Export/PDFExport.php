@@ -1,17 +1,17 @@
 <?php
+ 
+ namespace App\Export;
 
-namespace App\Export;
+ use Illuminate\Http\Request;
+ use App\Models\Questions;
+ use App\Models\ContactInformation;
+ use App\Models\QuestionsRespUser;
+ use App\Models\CategoryQuestions;
+ use Carbon\Carbon;
 
-use Illuminate\Http\Request;
-use App\Models\Questions;
-use App\Models\ContactInformation;
-use App\Models\QuestionsRespUser;
-use App\Models\CategoryQuestions;
-use Carbon\Carbon;
-use Maatwebsite\Excel\Facades\Excel;
+class PDFExport {
 
-class Export {
-    public function exportPDF(Request $request) {
+    public function Export(Request $request) {
         $periodo;
         $inicio;
         $final;
@@ -58,9 +58,12 @@ class Export {
                     
                     foreach($data_num_control as $value) {
                         $alumno_id = ContactInformation::select('id')->where('enrollment', $value)->get()->pluck('id');
-                        $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
-                                                          ->where('created_at', '>=', $inicio)
-                                                          ->where('created_at', '<=', $final)->get();
+                        //Necesita una alarma en caso de no encontrar al egresado.
+                        // $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
+                        //                                   ->where('created_at', '>=', $inicio)
+                        //                                   ->where('created_at', '<=', $final)->get();
+                        $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
+                        //alarma en caso de no tener encuesta.
                         
                         foreach($question_user as $item) {
                             if ($x == $item->answer_num) {
@@ -90,11 +93,11 @@ class Export {
                             $dato->num_answer_specify = $num_answer_specify;
 
                             array_push($data,(object) $dato);
+                            
                         }
                     }
                     
-                    $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
-                    return $pdf->download('Reporte_de_Encuesta.pdf');
+                    return $data;
                 } else {
                     if($request['periodoEscolar'] = 'Enero-Junio') {
                         $now = Carbon::now();
@@ -153,8 +156,7 @@ class Export {
                         array_push($data,(object) $dato);
                     }
                     
-                    $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
-                    return $pdf->download('Reporte_de_Encuesta.pdf');
+                    return $data;
                 }
 
                 break;
@@ -213,8 +215,7 @@ class Export {
                         }
                     }
                     
-                    $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
-                    return $pdf->download('Reporte_de_Encuesta.pdf');
+                    return $data;
                 } else {
                     $x = $request->get('fecha_inicial');
                     $y = $request->get('fecha_fin');
@@ -262,8 +263,7 @@ class Export {
                         array_push($data,(object) $dato);
                     }
                     
-                    $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
-                    return $pdf->download('Reporte_de_Encuesta.pdf');
+                    return $data;
                 }
 
                 break;
@@ -272,10 +272,5 @@ class Export {
                 break;
         }
     }
-
-    public function exportEXCEL(Request $request) {
-        return view('Plantilla_Export.excel', [
-            'users' => ContactInformation::get()
-        ]);
-    }
 }
+
