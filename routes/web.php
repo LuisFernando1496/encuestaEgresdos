@@ -36,8 +36,13 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::post('/encuesta', [QuestionsController::class, 'store'])->name('encuesta.store');
     Route::get('/ver_encuesta', [QuestionsController::class, 'show'])->name('encuesta.show');
     Route::post('/question_update', [QuestionsController::class, 'update'])->name('question.update');
-    Route::post('/answer_update', [AnswersController::class, 'update'])->name('answers.update');
+    
     Route::post('/imprimir_encuesta', [QuestionsController::class, 'export'])->name('encuesta.imprimir');
+    Route::get('/doc_encuesta', [QuestionsController::class, 'seePDF'])->name('doc.encuesta');
+    Route::post('imprimir', [QuestionsController::class, 'exportPDF'])->name('export');
+    
+    Route::post('/answer_update', [AnswersController::class, 'update'])->name('answers.update');
+    
     Route::get('/studens',[UsersController::class, 'indexStudents'])->name('studens');
     Route::get('/graduates',[UsersController::class, 'indexGraduates'])->name('graduates');
 
