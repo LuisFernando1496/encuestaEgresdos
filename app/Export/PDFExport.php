@@ -1,25 +1,24 @@
 <?php
  
- namespace App\Export;
+namespace App\Export;
 
- use Illuminate\Http\Request;
- use App\Models\Questions;
- use App\Models\ContactInformation;
- use App\Models\QuestionsRespUser;
- use App\Models\CategoryQuestions;
- use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\Questions;
+use App\Models\ContactInformation;
+use App\Models\QuestionsRespUser;
+use App\Models\CategoryQuestions;
+use Carbon\Carbon;
+
 
 class PDFExport {
+
+    public $chartsData = [];
 
     public function Export(Request $request) {
         $periodo;
         $inicio;
         $final;
-        $data = [];
-        $num_answer_num = 0;
-        $num_answer_text = 0;
-        $num_answer_specify = 0;
-
+        
         if($request['periodoEscolar'] != null){
             $periodo = 'escolar';
         }else {
@@ -50,53 +49,8 @@ class PDFExport {
                         $final = date('Y-m-d H:i:s', $b);
                     }
 
-                    $x = 0;
-                    $y = "";
-                    $z = "";
+                    $data = PDFExport::getDataNumControl($request['num_control'], $inicio, $final);
 
-                    $data_num_control = explode(',', $request['num_control']);
-                    
-                    foreach($data_num_control as $value) {
-                        $alumno_id = ContactInformation::select('id')->where('enrollment', $value)->get()->pluck('id');
-                        //Necesita una alarma en caso de no encontrar al egresado.
-                        // $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
-                        //                                   ->where('created_at', '>=', $inicio)
-                        //                                   ->where('created_at', '<=', $final)->get();
-                        $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
-                        //alarma en caso de no tener encuesta.
-                        
-                        foreach($question_user as $item) {
-                            if ($x == $item->answer_num) {
-                                $num_answer_num = $num_answer_num + 1;
-                            }
-                            if ($y = $item->answer_text) {
-                                $num_answer_text = $num_answer_text + 1;
-                            }
-                            if ($z = $item->answer_specify) {
-                                $num_answer_specify = $num_answer_specify + 1;
-                            }
-
-                            $x = $item->answer_num;
-                            $y = $item->answer_text;
-                            $z = $item->answer_specify;
-
-                            $dato = new \stdClass();
-                            $dato->num_control = $value;
-                            $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
-                            $dato->category = $name[0];
-                            $dato->question = $item->question;
-                            $dato->answer_num = $item->answer_num;
-                            $dato->answer_text = $item->answer_text;
-                            $dato->answer_specify = $item->answer_specify;
-                            $dato->num_answer_num = $num_answer_num;
-                            $dato->num_answer_text = $num_answer_text;
-                            $dato->num_answer_specify = $num_answer_specify;
-
-                            array_push($data,(object) $dato);
-                            
-                        }
-                    }
-                    
                     return $data;
                 } else {
                     if($request['periodoEscolar'] = 'Enero-Junio') {
@@ -119,42 +73,7 @@ class PDFExport {
                         $final = date('Y-m-d H:i:s', $b);
                     }
 
-                    $x = 0;
-                    $y = "";
-                    $z = "";
-
-                    $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
-                                                        ->where('created_at', '<=', $final)->get();
-                    
-                    foreach($question_user as $item) {
-                        if ($x == $item->answer_num) {
-                            $num_answer_num = $num_answer_num + 1;
-                        }
-                        if ($y = $item->answer_text) {
-                            $num_answer_text = $num_answer_text + 1;
-                        }
-                        if ($z = $item->answer_specify) {
-                            $num_answer_specify = $num_answer_specify + 1;
-                        }
-
-                        $x = $item->answer_num;
-                        $y = $item->answer_text;
-                        $z = $item->answer_specify;
-
-                        $dato = new \stdClass();
-                        $dato->num_control = $value;
-                        $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
-                        $dato->category = $name[0];
-                        $dato->question = $item->question;
-                        $dato->answer_num = $item->answer_num;
-                        $dato->answer_text = $item->answer_text;
-                        $dato->answer_specify = $item->answer_specify;
-                        $dato->num_answer_num = $num_answer_num;
-                        $dato->num_answer_text = $num_answer_text;
-                        $dato->num_answer_specify = $num_answer_specify;
-
-                        array_push($data,(object) $dato);
-                    }
+                    $data = PDFExport::getData($inicio, $final);
                     
                     return $data;
                 }
@@ -172,48 +91,7 @@ class PDFExport {
                     $b = strtotime("$y 00:00:00");
                     $final = date('Y-m-d H:i:s', $b);
                 
-                    $x = 0;
-                    $y = "";
-                    $z = "";
-
-                    $data_num_control = explode(',', $request['num_control']);
-                    
-                    foreach($data_num_control as $value) {
-                        $alumno_id = ContactInformation::select('id')->where('enrollment', $value)->get()->pluck('id');
-                        $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
-                                                          ->where('created_at', '>=', $inicio)
-                                                          ->where('created_at', '<=', $final)->get();
-                        
-                        foreach($question_user as $item) {
-                            if ($x == $item->answer_num) {
-                                $num_answer_num = $num_answer_num + 1;
-                            }
-                            if ($y = $item->answer_text) {
-                                $num_answer_text = $num_answer_text + 1;
-                            }
-                            if ($z = $item->answer_specify) {
-                                $num_answer_specify = $num_answer_specify + 1;
-                            }
-
-                            $x = $item->answer_num;
-                            $y = $item->answer_text;
-                            $z = $item->answer_specify;
-
-                            $dato = new \stdClass();
-                            $dato->num_control = $value;
-                            $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
-                            $dato->category = $name[0];
-                            $dato->question = $item->question;
-                            $dato->answer_num = $item->answer_num;
-                            $dato->answer_text = $item->answer_text;
-                            $dato->answer_specify = $item->answer_specify;
-                            $dato->num_answer_num = $num_answer_num;
-                            $dato->num_answer_text = $num_answer_text;
-                            $dato->num_answer_specify = $num_answer_specify;
-
-                            array_push($data,(object) $dato);
-                        }
-                    }
+                    $data = PDFExport::getDataNumControl($request['num_control'], $inicio, $final);
                     
                     return $data;
                 } else {
@@ -226,42 +104,7 @@ class PDFExport {
                     $b = strtotime("$y 00:00:00");
                     $final = date('Y-m-d H:i:s', $b);
 
-                    $x = 0;
-                    $y = "";
-                    $z = "";
-
-                    $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
-                                                        ->where('created_at', '<=', $final)->get();
-                    
-                    foreach($question_user as $item) {
-                        if ($x == $item->answer_num) {
-                            $num_answer_num = $num_answer_num + 1;
-                        }
-                        if ($y = $item->answer_text) {
-                            $num_answer_text = $num_answer_text + 1;
-                        }
-                        if ($z = $item->answer_specify) {
-                            $num_answer_specify = $num_answer_specify + 1;
-                        }
-
-                        $x = $item->answer_num;
-                        $y = $item->answer_text;
-                        $z = $item->answer_specify;
-
-                        $dato = new \stdClass();
-                        $dato->num_control = $value;
-                        $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
-                        $dato->category = $name[0];
-                        $dato->question = $item->question;
-                        $dato->answer_num = $item->answer_num;
-                        $dato->answer_text = $item->answer_text;
-                        $dato->answer_specify = $item->answer_specify;
-                        $dato->num_answer_num = $num_answer_num;
-                        $dato->num_answer_text = $num_answer_text;
-                        $dato->num_answer_specify = $num_answer_specify;
-
-                        array_push($data,(object) $dato);
-                    }
+                    $data = PDFExport::getData($inicio, $final);
                     
                     return $data;
                 }
@@ -272,5 +115,122 @@ class PDFExport {
                 break;
         }
     }
+
+    public function getDataNumControl($num_control, $inicio, $final) {
+        $data = [];
+        
+        $data_num_control = explode(',', $num_control);
+        
+        foreach($data_num_control as $value) {
+            $alumno_id = ContactInformation::select('id')->where('enrollment', $value)->get()->pluck('id');
+            if($alumno_id->isEmpty()) {
+                return 'Error!, Verifique si el numero de control es correcto.';
+            }
+            
+            // $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
+            //                                   ->where('created_at', '>=', $inicio)
+            //                                   ->where('created_at', '<=', $final)->get();
+            $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
+            if($question_user->isEmpty()) {
+                return "Error! No se encontraron encuestas contestadas del num de control $value";
+            }
+            
+            foreach($question_user as $item) {
+                $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
+
+                $dato = new \stdClass();
+                $dato->num_control = $value;
+                $dato->category = $name[0];
+                $dato->question = $item->question;
+                $dato->answer_num = $item->answer_num;
+                $dato->answer_text = $item->answer_text;
+                $dato->answer_other_specify = $item->answer_other_specify;
+                
+                array_push($data,(object) $dato);             
+            }
+            
+            foreach ($data as $value) {
+                // $question = $value->question;
+                // $answer_num = $value->answer_num;
+                // $answer_text = $value->answer_text;
+                // $answer_other_specify = $value->answer_other_specify;
+
+                $consulta = QuestionsRespUser::where('user_id', $alumno_id[0])
+                                             ->where('question', $value->question)
+                                             ->where('answer_num', $value->answer_num)
+                                             ->where('answer_text', $value->answer_text)
+                                             ->where('answer_other_specify', $value->answer_other_specify)
+                                             ->get();
+                // foreach($data as $item) {
+                //     $consulta = QuestionsRespUser::where('user_id', $alumno_id[0])
+                //                                    ->where('question', $question)
+                //                                    ->where('answer_num', $answer_num)
+                //                                    ->where('answer_text', $answer_text)
+                //                                    ->where('answer_ specify', $answer_other_specify)
+                //                                    ->get();
+                // }
+                
+                $count = count($consulta);
+                
+                $chartsData['question'][] = $value->question;
+                $chartsData['total'][] = $count;
+            }
+            
+            return $data;
+        }                    
+    }
+
+    public function getData($inicio, $final) {
+        $data = [];
+
+        // $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
+        //                                   ->where('created_at', '<=', $final)
+        //                                   ->get();
+        $question_user = QuestionsRespUser::all();
+
+        if($question_user->isEmpty()) {
+            return "Error! No se encontraron encuestas contestadas en ese rango.";
+        }
+
+        foreach($question_user as $item) {
+            $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
+            $num = ContactInformation::select('enrollment')->where('id', $item->user_id)->get()->pluck('enrollment');
+
+            $dato = new \stdClass();
+            $dato->num_control = $num[0];
+            $dato->category = $name[0];
+            $dato->question = $item->question;
+            $dato->answer_num = $item->answer_num;
+            $dato->answer_text = $item->answer_text;
+            $dato->answer_other_specify = $item->answer_other_specify;
+            
+            array_push($data,(object) $dato);             
+        }
+        
+        foreach ($data as $value) {
+            $alumno_id = ContactInformation::select('id')->where('enrollment', $value->num_control)->get()->pluck('id');
+            
+            $question = $value->question;
+            $answer_num = $value->answer_num;
+            $answer_text = $value->answer_text;
+            $answer_other_specify = $value->answer_other_specify;
+
+            foreach($data as $item) {
+                $consulta_ = QuestionsRespUser::where('question', $question)
+                                               ->where('answer_num', $answer_num)
+                                               ->where('answer_text', $answer_text)
+                                               ->where('answer_other_specify', $answer_other_specify)
+                                               ->get();
+            }
+            
+            $count = count($consulta_);
+
+            $chartsData['question'][] = $value->question;
+            $chartsData['total'][] = $count;
+        }
+        dd($chartsData);
+        return $data;
+    }
+
 }
 

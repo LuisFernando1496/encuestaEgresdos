@@ -90,7 +90,6 @@ class QuestionsController extends Controller
     }
 
     public function export(Request $request) {
-        dd($request);
         switch ($request['fileExport']) {
             case 'PDF':
                 $data = PDFExport::Export($request);
@@ -115,7 +114,7 @@ class QuestionsController extends Controller
     }
 
     public function seePDF() {
-        $data = $this->getData;
+        $data = $getData;
 
         $date = Carbon::now();
         $title = "Reporte_$date.pdf";
@@ -124,7 +123,7 @@ class QuestionsController extends Controller
     }
 
     public function seeExcel() {
-        $data = $this->getData;
+        $data = $getData;
 
         $date = Carbon::now();
         $title = "Reporte_$date.xlsx";

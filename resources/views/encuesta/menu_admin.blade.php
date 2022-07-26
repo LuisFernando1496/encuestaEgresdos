@@ -51,7 +51,7 @@
                                     </select>
                                     <label class="px-4">Ingrese numero de control:</label>
                                     <input class="rounded-lg py-1 px-3" type="text" name="num_control" id="id_control" placeholder="">
-                                    <input type="hidden" name="fileExport" value="">
+                                    <input type="hidden" name="fileExport" id="fileExport" value="PDF">
                                 </div>
                             </div>
                         </div>
@@ -99,12 +99,13 @@
             </div>
         </form>
     </div>
-    <script>
+    
+    <script>                                        //TODO:  Solucionar el "problema" del id..
     function buttonPDF() {
-        $('input[name="fileExport"]').val('PDF');
+        document.getElementById('fileExport').val('PDF');
     }
     function buttonEXCEL() {
-        $('input[name="fileExport"]').val('EXCEL');
+        document.getElementById('fileExport').val('EXCEL');
     }
     </script>
 </x-app-layout>
