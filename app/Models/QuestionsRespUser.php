@@ -15,7 +15,7 @@ class QuestionsRespUser extends Model
         'question', 
         'answer_num', 
         'answer_text', 
-        'answer_other_ specify',
+        'answer_other_specify',
         'status',
     ];
 

@@ -7,13 +7,14 @@ use App\Models\Questions;
 use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
 use App\Models\CategoryQuestions;
+use App\Models\RespUserTemp;
 use Carbon\Carbon;
 
 
-class PDFExport {
+class ExportData {
 
-    public $chartsData = [];
-
+    public $chartsData;
+    
     public function Export(Request $request) {
         $periodo;
         $inicio;
@@ -49,7 +50,7 @@ class PDFExport {
                         $final = date('Y-m-d H:i:s', $b);
                     }
 
-                    $data = PDFExport::getDataNumControl($request['num_control'], $inicio, $final);
+                    $data = ExportData::getDataNumControl($request['num_control'], $inicio, $final);
 
                     return $data;
                 } else {
@@ -73,7 +74,7 @@ class PDFExport {
                         $final = date('Y-m-d H:i:s', $b);
                     }
 
-                    $data = PDFExport::getData($inicio, $final);
+                    $data = ExportData::getData($inicio, $final);
                     
                     return $data;
                 }
@@ -91,7 +92,7 @@ class PDFExport {
                     $b = strtotime("$y 00:00:00");
                     $final = date('Y-m-d H:i:s', $b);
                 
-                    $data = PDFExport::getDataNumControl($request['num_control'], $inicio, $final);
+                    $data = ExportData::getDataNumControl($request['num_control'], $inicio, $final);
                     
                     return $data;
                 } else {
@@ -104,7 +105,7 @@ class PDFExport {
                     $b = strtotime("$y 00:00:00");
                     $final = date('Y-m-d H:i:s', $b);
 
-                    $data = PDFExport::getData($inicio, $final);
+                    $data = ExportData::getData($inicio, $final);
                     
                     return $data;
                 }
@@ -150,30 +151,39 @@ class PDFExport {
             }
             
             foreach ($data as $value) {
-                // $question = $value->question;
-                // $answer_num = $value->answer_num;
-                // $answer_text = $value->answer_text;
-                // $answer_other_specify = $value->answer_other_specify;
+                $question = $value->question;
+                $answer_num = $value->answer_num;
+                $answer_text = $value->answer_text;
+                $answer_other_specify = $value->answer_other_specify;
 
-                $consulta = QuestionsRespUser::where('user_id', $alumno_id[0])
-                                             ->where('question', $value->question)
-                                             ->where('answer_num', $value->answer_num)
-                                             ->where('answer_text', $value->answer_text)
-                                             ->where('answer_other_specify', $value->answer_other_specify)
-                                             ->get();
-                // foreach($data as $item) {
-                //     $consulta = QuestionsRespUser::where('user_id', $alumno_id[0])
-                //                                    ->where('question', $question)
-                //                                    ->where('answer_num', $answer_num)
-                //                                    ->where('answer_text', $answer_text)
-                //                                    ->where('answer_ specify', $answer_other_specify)
-                //                                    ->get();
-                // }
+                foreach($data as $item) {
+                    $consulta = QuestionsRespUser::where('question', $question)
+                                                 ->where('answer_num', $answer_num)
+                                                 ->where('answer_text', $answer_text)
+                                                 ->where('answer_ specify', $answer_other_specify)
+                                                 ->get();
+                }
                 
                 $count = count($consulta);
                 
                 $chartsData['question'][] = $value->question;
+                if($answer_num != null) {
+                    $chartsData['answer'][] = $answer_num;
+                }
+                if($answer_text != null) {
+                    $chartsData['answer'][] = $answer_text;
+                }if($answer_other_specify != null) {
+                    $chartsData['answer'][] = $answer_other_specify;
+                }
                 $chartsData['total'][] = $count;
+            }
+            
+            for($i = 0; $i < count($chartsData); $i++) {
+                for ($j = 0; $j < count($chartsData); $j++) { 
+                    if($chartsData[$j] == $chartsData[$j + 1]) {
+                        unset($chartsData[$j]);
+                    }
+                }
             }
             
             return $data;
@@ -182,7 +192,7 @@ class PDFExport {
 
     public function getData($inicio, $final) {
         $data = [];
-
+        
         // $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
         //                                   ->where('created_at', '<=', $final)
         //                                   ->get();
@@ -203,6 +213,8 @@ class PDFExport {
             $dato->answer_num = $item->answer_num;
             $dato->answer_text = $item->answer_text;
             $dato->answer_other_specify = $item->answer_other_specify;
+
+            $save = RespUserTemp::insert($dato);
             
             array_push($data,(object) $dato);             
         }
@@ -216,20 +228,54 @@ class PDFExport {
             $answer_other_specify = $value->answer_other_specify;
 
             foreach($data as $item) {
-                $consulta_ = QuestionsRespUser::where('question', $question)
+                $consulta = QuestionsRespUser::where('question', $question)
                                                ->where('answer_num', $answer_num)
                                                ->where('answer_text', $answer_text)
                                                ->where('answer_other_specify', $answer_other_specify)
                                                ->get();
             }
             
-            $count = count($consulta_);
+            $count = count($consulta);
 
-            $chartsData['question'][] = $value->question;
-            $chartsData['total'][] = $count;
+            if($answer_num != null) {
+                $d = $answer_num;
+            }
+            if($answer_text != null) {
+                $d = $answer_text;
+            }
+            if($answer_other_specify != null) {
+                $d = $answer_other_specify;
+            }
+
+            $dd[] = array(
+                'question' => $value->question,
+                'answer' => $d,
+                'total' => $count,
+            );            
         }
-        dd($chartsData);
-        return $data;
+
+        //$lista = array_values(array_unique($dd));
+        
+        for($i = 1; $i < count($dd); $i++) {
+            for ($j = 0; $j < count($dd)-$i; $j++) { 
+                if($dd[$j] == $dd[$j+1]) {
+                    $array[] = array(
+                        'dato' => $dd[$j],
+                    );
+                }
+            }
+        }
+        
+        for ($i = 0; $i < count($array); $i++) { 
+            for($j = 0; $j < count($dd); $j++) {
+                if($dd[$j] == $array[$j+1]) {
+                    $array2[] = array(
+                        'dato' => $dd[$j],
+                    );
+                }
+            }
+        }
+        dd($array2);
     }
 
 }

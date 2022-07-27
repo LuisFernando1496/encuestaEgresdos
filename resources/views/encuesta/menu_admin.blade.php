@@ -51,7 +51,7 @@
                                     </select>
                                     <label class="px-4">Ingrese numero de control:</label>
                                     <input class="rounded-lg py-1 px-3" type="text" name="num_control" id="id_control" placeholder="">
-                                    <input type="hidden" name="fileExport" id="fileExport" value="PDF">
+                                    <input type="hidden" name="fileExport" id="fileExport" value="EXCEL">
                                 </div>
                             </div>
                         </div>

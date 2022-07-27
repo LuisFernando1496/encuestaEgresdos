@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Questions;
 use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
-use App\Export\PDFExport;
+use App\Export\ExportData;
 use App\Export\ExcelExport;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -90,22 +90,20 @@ class QuestionsController extends Controller
     }
 
     public function export(Request $request) {
+        $data = ExportData::Export($request);
+
         switch ($request['fileExport']) {
             case 'PDF':
-                $data = PDFExport::Export($request);
-
                 $date = Carbon::now();
                 $title = "Reporte_$date.pdf";
 
                 dd($data);
                 break;
             case 'EXCEL':
-                ExcelExport::takeValues($request);
-
                 $date = Carbon::now();
                 $title = "Reporte_$date.xlsx";
                 
-                return Excel::download(new ExcelExport, 'title');
+                //return Excel::download(new ExcelExport, 'title');
                 break;
             default:
                 # code...
@@ -113,28 +111,28 @@ class QuestionsController extends Controller
         }
     }
 
-    public function seePDF() {
-        $data = $getData;
+    // public function seePDF() {
+    //     $data = $getData;
 
-        $date = Carbon::now();
-        $title = "Reporte_$date.pdf";
+    //     $date = Carbon::now();
+    //     $title = "Reporte_$date.pdf";
 
-        return view('encuesta.charts_image', compact('data', 'title'));
-    }
+    //     return view('encuesta.charts_image', compact('data', 'title'));
+    // }
 
-    public function seeExcel() {
-        $data = $getData;
+    // public function seeExcel() {
+    //     $data = $getData;
 
-        $date = Carbon::now();
-        $title = "Reporte_$date.xlsx";
+    //     $date = Carbon::now();
+    //     $title = "Reporte_$date.xlsx";
 
-        return view('encuesta.charts_image', compact('data', 'title'));
-    }
+    //     return view('encuesta.charts_image', compact('data', 'title'));
+    // }
 
-    public function exportDoc(Request $request) {
-        //code...
+    // public function exportDoc(Request $request) {
+    //     //code...
 
-        $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
-        return $pdf->download('title');
-    }
+    //     $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
+    //     return $pdf->download('title');
+    // }
 }
