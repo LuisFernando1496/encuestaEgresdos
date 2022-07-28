@@ -197,7 +197,7 @@ class ExportData {
         //                                   ->where('created_at', '<=', $final)
         //                                   ->get();
         $question_user = QuestionsRespUser::all();
-
+        
         if($question_user->isEmpty()) {
             return "Error! No se encontraron encuestas contestadas en ese rango.";
         }
@@ -213,14 +213,11 @@ class ExportData {
             $dato->answer_num = $item->answer_num;
             $dato->answer_text = $item->answer_text;
             $dato->answer_other_specify = $item->answer_other_specify;
-
-            $save = RespUserTemp::insert($dato);
             
             array_push($data,(object) $dato);             
         }
         
         foreach ($data as $value) {
-            $alumno_id = ContactInformation::select('id')->where('enrollment', $value->num_control)->get()->pluck('id');
             
             $question = $value->question;
             $answer_num = $value->answer_num;
@@ -251,31 +248,9 @@ class ExportData {
                 'question' => $value->question,
                 'answer' => $d,
                 'total' => $count,
-            );            
+            );
         }
-
-        //$lista = array_values(array_unique($dd));
-        
-        for($i = 1; $i < count($dd); $i++) {
-            for ($j = 0; $j < count($dd)-$i; $j++) { 
-                if($dd[$j] == $dd[$j+1]) {
-                    $array[] = array(
-                        'dato' => $dd[$j],
-                    );
-                }
-            }
-        }
-        
-        for ($i = 0; $i < count($array); $i++) { 
-            for($j = 0; $j < count($dd); $j++) {
-                if($dd[$j] == $array[$j+1]) {
-                    $array2[] = array(
-                        'dato' => $dd[$j],
-                    );
-                }
-            }
-        }
-        dd($array2);
+        $save = RespUserTemp::insert($dd);
     }
 
 }

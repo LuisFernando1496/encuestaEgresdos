@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/dataCharts', [QuestionsController::class, 'charts'])->name('encuesta.charts');
+Route::post('/dataCharts', [QuestionsController::class, 'chartsData'])->name('encuesta.chartsData');

@@ -22,7 +22,7 @@ class CreateQuestionRespUserTable extends Migration
             $table->string('sub_question')->nullable();
             $table->string('answer_num')->default('0');
             $table->string('answer_text')->default('0');
-            $table->string('answer_other_ specify')->default('0');
+            $table->string('answer_other_specify')->default('0');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

@@ -1,92 +1,26 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Quiz') }}
-        </h2>
-    </x-slot>
-    <div class="max-w-8xl sm:px-6 lg:px-8 my-5">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-            <div class="flex flex-col">
-                <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-4">
-                                <label for="">
-                                    DATOS A EXPORTAR
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br><hr><br>
-        <form action="{{ route('encuesta.imprimir') }}" method="post">
-        @csrf
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="flex flex-col">
-                    <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                @foreach($data as $data_r)
-                                    <input type="text" name="charts" id="charts_image">
-                                    <div class="center-items">
-                                        <h4>Datos Del Egresado</h4>
-                                        <label>N° de Control: {{ $data_r->num_control }}</label><br>
-                                        <label>Nombre: </label><br>
-                                        <label>Carrera: </label>
-                                    </div>
-                                    <div class="center-items">
-                                        <hr class="hr-item">
-                                        <div>
-                                            {{ $data_r->category }}
-                                        </div>
-                                        <!-- <hr class="hr-item">
-                                        <hr class="hr-item"> -->
-                                        <hr class="hr-item">
-                                        <div class="">  
-                                        <!-- Preguntas -->
-                                        <hr>
-                                        <div>
-                                            Respuesta. {{ $data_r->question }}
-                                            <input type="hidden" value="{{ $data_r->question }}" id="question">
-                                        </div>
-                                        <hr>
-                                        <div>
-                                                <!-- Respuestas -->
-                                                <div class="answer-items">
-                                                    @if($data_r->answer_num != "")
-                                                        <label>Respuesta. {{ $data_r->answer_num }}</label>
-                                                    @elseif($data_r->answer_text != "")
-                                                        <label>Respuesta. {{ $data_r->answer_text }}</label>
-                                                    @elseif($data_r->answer_specify != "")
-                                                        <label>Respuesta. {{ $data_r->answer_specify }}</label>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="text-blue-600 hover:text-blue-900 bg-blue-100 rounded-lg py-1 px-3 text-right" type="submit">
-                    Confirmar.
-                </button>            
-            </div>
-        </form>
-    </div>
-    
     <canvas id="myChart" width="400" height="400"></canvas>
     
     <script>
         var labels = [];
         var dataSet = [];
 
-        var q = document.getElementById('question').value;
-        console.log(q);
-        labels.append(q);
+        $.ajax({
+            type: 'GET', //THIS NEEDS TO BE GET
+            url: '/dataCharts',
+            success: function (data) {
+                var obj = JSON.parse(data);
+                console.log(obj);
+                // $.each(obj['getstamps'], function (key, val) {
+                //     your_html += "<p>My Value :" +  val + ") </p>"
+                // });
+                // $("#data").append(you_html); //// For Append
+                // $("#mydiv").html(your_html)   //// For replace with previous one
+            },
+            error: function() { 
+                console.log(data);
+            }
+        });
 
         const ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {

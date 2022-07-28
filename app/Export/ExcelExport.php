@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports;
+namespace App\Export;
 
 use App\Models\RespUserTemp;
 use Illuminate\Contracts\View\View;
@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 
-class ExcelExport implements FromCollection, FromView
+class ExcelExport implements FromView
 {
 
     public function view(): View {
@@ -16,9 +16,5 @@ class ExcelExport implements FromCollection, FromView
             'data' => RespUserTemp::all()
         ]);
     }
-    public function collection()
-    {
-            
-    }
-
+    
 }

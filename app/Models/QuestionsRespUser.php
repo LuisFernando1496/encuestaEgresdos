@@ -18,10 +18,5 @@ class QuestionsRespUser extends Model
         'answer_other_specify',
         'status',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(Users::class);
-    }
     
 }

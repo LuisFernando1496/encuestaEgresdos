@@ -9,12 +9,12 @@ use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
 use App\Export\ExportData;
 use App\Export\ExcelExport;
+use App\Models\RespUserTemp;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class QuestionsController extends Controller
 {
-
     public function index()
     {
         return view('encuesta.menu_admin');
@@ -90,25 +90,94 @@ class QuestionsController extends Controller
     }
 
     public function export(Request $request) {
-        $data = ExportData::Export($request);
-
+        $dato = ExportData::Export($request);
+        //$chart = QuestionsController::charts();
+        
         switch ($request['fileExport']) {
             case 'PDF':
+                $data = RespUserTemp::all();
                 $date = Carbon::now();
                 $title = "Reporte_$date.pdf";
 
-                dd($data);
+                $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title'));
+                return $pdf->download("$title");
                 break;
             case 'EXCEL':
                 $date = Carbon::now();
                 $title = "Reporte_$date.xlsx";
                 
-                //return Excel::download(new ExcelExport, 'title');
+                return Excel::download(new ExcelExport, "$title");
                 break;
             default:
                 # code...
                 break;
         }
+    }
+
+    public function charts() {
+        $answer;
+        $array;
+        $array2;
+        $charts = RespUserTemp::all();
+
+        foreach ($charts as $value) {
+            $question = $value->question;
+            $answer_num = $value->answer_num;
+            $answer_text = $value->answer_text;
+            $answer_other_specify = $value->answer_other_specify;
+
+            foreach($charts as $item) {
+                $consulta = QuestionsRespUser::where('question', $question)
+                                               ->where('answer_num', $answer_num)
+                                               ->where('answer_text', $answer_text)
+                                               ->where('answer_other_specify', $answer_other_specify)
+                                               ->get();
+            }
+            
+            $count = count($consulta);
+
+            if($answer_num != null) {
+                $answer = $answer_num;
+            }
+            if($answer_text != null) {
+                $answer = $answer_text;
+            }
+            if($answer_other_specify != null) {
+                $answer = $answer_other_specify;
+            }
+
+            $dd[] = array(
+                'question' => $value->question,
+                
+                'total' => $count,
+            );            
+        }
+
+        for($i = 1; $i < count($dd); $i++) {
+            for ($j = 0; $j < count($dd)-$i; $j++) { 
+                if($dd[$j] == $dd[$j+1]) {
+                    $array[] = array(
+                        'dato' => $dd[$j],
+                    );
+                }
+            }
+        }
+        
+        for ($i = 1; $i < count($array); $i++) { 
+            for($j = 0; $j < count($dd); $j++) {
+                if($dd[$j] == $array[$j+1]) {
+                    $array2[] = array(
+                        'dato' => $dd[$j],
+                    );
+                }
+            }
+        }
+
+        dd($array2);
+    }
+
+    public function chartsData() {
+
     }
 
     // public function seePDF() {
