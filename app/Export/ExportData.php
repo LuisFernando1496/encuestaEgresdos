@@ -218,7 +218,6 @@ class ExportData {
         }
         
         foreach ($data as $value) {
-            
             $question = $value->question;
             $answer_num = $value->answer_num;
             $answer_text = $value->answer_text;
@@ -245,6 +244,7 @@ class ExportData {
             }
 
             $dd[] = array(
+                'num_control' => $value->num_control,
                 'question' => $value->question,
                 'answer' => $d,
                 'total' => $count,

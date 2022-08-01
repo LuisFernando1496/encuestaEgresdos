@@ -100,9 +100,10 @@
         </form>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>                                        //TODO:  Solucionar el "problema" del id..
     function buttonPDF() {
-        $('#fileExport').val('PDF');
+        document.getElementById('#fileExport').val('PDF');
     }
     function buttonEXCEL() {
         $('#fileExport').val('EXCEL');

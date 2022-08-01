@@ -33,12 +33,19 @@
             margin-top: 20px;
             color: blue;
         }
-        .center-items{
+        .center-items-title{
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
             border: blue solid;
+        }
+        .center-items{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-collapse: collapse;
         }
         .answer-items{
             display: flex;
@@ -49,17 +56,14 @@
     </style>
     <body>
         <div class="data-center-items">
-            <img class="logo_izq" src="{{ asset('img/Logo_tec.jpg') }}">
+            <!-- <img class="logo_izq" src="{{ asset('img/Logo_TecNM.png') }}"> -->
             <h5 class="titulo_centro">Instituto Tecnológico De México (Tuxtla Gutiérrez)</h5>
-            <label class="titulo-centro">{{ $title }}</label>
-            <img class="logo_der" src="{{ asset('img/logo_ittg.jpg') }}"">
+            <!-- <img class="logo_der" src="{{ asset('img/logo_ittg.png') }}"> -->
         </div>
         @foreach($data as $data_r)
-            <div class="center-items">
+            <div class="center-items-title">
                 <h4>Datos Del Egresado</h4>
                 <label>N° de Control: {{ $data_r->num_control }}</label><br>
-                <label>Nombre: </label><br>
-                <label>Carrera: </label>
             </div>
             <table>
                 <tbody>
