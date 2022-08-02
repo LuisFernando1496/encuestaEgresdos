@@ -12,6 +12,7 @@ use App\Export\ExcelExport;
 use App\Models\RespUserTemp;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Charts\UserChart;
 
 class QuestionsController extends Controller
 {
@@ -90,7 +91,11 @@ class QuestionsController extends Controller
     }
 
     public function export(Request $request) {
+        $labels = [];
+        $dataset = [];
+
         $dato = ExportData::Export($request);
+
         //$chart = QuestionsController::charts();
         //partName = date('dmY_his');
 
@@ -99,6 +104,18 @@ class QuestionsController extends Controller
                 $data = RespUserTemp::all();
                 $date = Carbon::now();
                 $title = "Reporte_$date.pdf";
+
+                foreach($data as $value) {
+                    $labels[] = $value->question;
+                    $dataset[] = $value->total;
+                }
+
+                $charts = new UserChart;
+                $charts->labels($labels);
+                $charts->dataset('Total de Respuestas', 'line', $dataset)
+                        ->color("rgb(255, 99, 132)");
+
+                //return view('encuesta.charts_image', compact('charts'));
 
                 $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title'));
                 return $pdf->download("$title");

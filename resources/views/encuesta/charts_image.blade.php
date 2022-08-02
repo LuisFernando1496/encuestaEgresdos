@@ -1,4 +1,7 @@
 <x-app-layout>
+    <div style="width: 50%">
+        {!! $charts->container() !!}
+    </div>
     <canvas id="myChart" width="400" height="400"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>

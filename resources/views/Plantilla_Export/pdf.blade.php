@@ -78,8 +78,13 @@
             </table>
         @endforeach
         
-        <div>
-            
-        </div>
+        @foreach($data as $value)
+            <div>{{ $value->question }}</div>
+            <ul>
+                @foreach($data as $dato)
+                    <li>Respuesta.- {{ $dato->answer }} <span> Total.- {{ $dato->total }}</span></li>
+                @endforeach
+            </ul>
+        @endforeach
     </body>
 </html>

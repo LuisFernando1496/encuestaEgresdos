@@ -13,4 +13,13 @@
             </tr>
         @endforeach
     @endforeach
+
+    @foreach($data as $value)
+        <td><strong>{{ $value->question }}</strong></td>
+        @foreach($data as $dato)
+            <tr>
+                <td>Respuesta.- {{ $dato->answer }} <span>Total.- {{ $dato->total }}</span></td>
+            </tr>
+        @endforeach
+    @endforeach
 </table>
