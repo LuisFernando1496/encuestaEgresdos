@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -71,9 +70,9 @@ class User extends Authenticatable
         return $this->hasMany(SocialNetwork::class);
     }
 
-    public function role()
+    public function roles()
     {
-        return $this->belongsToMany(Roles::class)->withTimestamps();
+        return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
     public function contactInformation()

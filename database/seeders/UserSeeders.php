@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Roles;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,10 +17,10 @@ class UserSeeders extends Seeder
     public function run()
     {
         $users = User::factory(20)->create();
-        $role = Roles::where("id", rand(1,2))->first();
+        $role = Role::where("id", 2)->first();
 
         $users->each(function($user) use ($role){
-            $user->role()->attach($role->id);
+            $user->roles()->attach($role->id);
         });
         $admin = User::create([
             'name' => 'admin',
@@ -31,6 +31,6 @@ class UserSeeders extends Seeder
             'remember_token' => Str::random(10),
 
         ]);
-        $admin->role()->attach(1);
+        $admin->roles()->attach(1);
     }
 }

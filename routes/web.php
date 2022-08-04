@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NuevoMensaje;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ContinuingEducationController;
 use App\Http\Controllers\JobsController;
@@ -71,4 +72,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/continuingEducation/eliminar/{continuingEducation}',[ContinuingEducationController::class,'destroy'])->name('education.destroy');
 
     Route::get('/messages',[MessagesController::class,'index'])->name('messages.index');
+    Route::get('/messages/admin',[MessagesController::class,'admindChat'])->name('admindChat');
+    Route::get('/messages/admin/data/{id}/{name}',[MessagesController::class,'redirect'])->name('reenvio');
 });
+

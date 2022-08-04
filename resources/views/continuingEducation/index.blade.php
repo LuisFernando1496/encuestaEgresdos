@@ -8,7 +8,9 @@
 
     <!-- component -->
     <section class="bg-white dark:bg-gray-100">
+
         <div class="container px-6 py-10 mx-auto">
+@if (auth()->user()->roles[0]->name == 'admin')
             <a type="button" href="{{route('education.create')}}"
                 class="animate-bounce p-1 m-5 w-14 h-14 cursor-pointer rounded-full bg-blue-500 hover:bg-blue-400 text-white text-center 
             float-right">
@@ -18,6 +20,7 @@
                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                 </svg>
             </a>
+             @endif
             <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-black">
                 {{ __('Continuing Education') }}</h1>
             <p class="max-w-2xl mx-auto my-6 text-center text-gray-900 dark:text-gray-900">
@@ -48,7 +51,7 @@
                             <p> <strong>Lugar: </strong>{{ $education->place }}</p>
                             <p><strong>Tel:</strong> {{ $education->cel_phone }}</p>
                         </a>
-                        @if (auth()->user()->role[0]->name == 'admin')
+                        @if (auth()->user()->roles[0]->name == 'admin')
                             <div class="flex mt-3 -mx-2">
                                 <a href="{{ route('education.edit', $education) }}" type="button"
                                     class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">

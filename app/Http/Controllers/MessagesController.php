@@ -6,6 +6,7 @@ use App\Models\Messages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMessagesRequest;
 use App\Http\Requests\UpdateMessagesRequest;
+use Illuminate\Support\Facades\Auth;
 
 class MessagesController extends Controller
 {
@@ -16,14 +17,38 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        return view('messages.index');
+        // return view('messages.index');
+        $userMesageId = Auth::user()->id;
+         $visto = Messages::where('to_id',$userMesageId)->where('status',false)->get();
+         foreach($visto as $item)
+         {
+            $item->update([
+                'status'=>true
+            ]);
+         }
+         return view('chat.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function admindChat()
+    {
+        return view('messages.index');
+    }
+    public function redirect($id, $name)
+    {
+       
+            session(['idUser' => $id]);
+           session(['nameUser' => $name]);
+           $userMesageId = Auth::user()->id;
+         $visto = Messages::where('to_id',$userMesageId)->where('status',false)->get();
+         foreach($visto as $item)
+         {
+            $item->update([
+                'status'=>true
+            ]);
+         }
+        return redirect()->route('messages.index');
+    }
+     
     public function create()
     {
         //

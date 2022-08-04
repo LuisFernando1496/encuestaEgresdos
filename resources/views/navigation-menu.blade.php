@@ -1,4 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    @php
+    $messageCount = App\Models\Messages::where('to_id',Auth::user()->id)->where('status',false)->get()->count();
+@endphp
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -46,14 +49,41 @@
                         {{ __('Graduates') }}
                     </x-jet-nav-link>
                 </div>
-
+               
             </div>
-
+            <div class="sm:flex sm:pt-4 pb-1 sm:ml-6">
+                @if (Auth::user()->roles[0]->pivot->role_id== 1)
+                     <a href="{{route('admindChat')}}" >
+                 @else
+                 <a href="{{route('messages.index')}}" > 
+                @endif
+          
+                <svg  xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-messenger" viewBox="0 0 16 16">
+                    <path d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z"/>
+                  </svg>
+   
+                  @if ($messageCount == 0)
+                      <div id="notification" class="animate-bounce bg-red-600 rounded-full" style="display: none">
+                    <span id="countNotification" class="text-gray-100 p-2">0</span>
+                  </div>
+                  @else
+                  <div id="notification" class="animate-bounce bg-red-600 rounded-full">
+                    <span id="countNotification" class="text-gray-100 p-2">{{$messageCount}}</span>
+                  </div>
+                  @endif
+                  
+                  
+            </a>
+        </div>
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
+             
+                
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ml-3 relative">
+                       
                         <x-jet-dropdown align="right" width="60">
+                         
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
@@ -166,7 +196,9 @@
             </div>
         </div>
     </div>
-
+   
+       
+  
     <!-- Menu Responsivo-->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">

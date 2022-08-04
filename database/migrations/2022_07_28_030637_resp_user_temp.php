@@ -28,6 +28,6 @@ class RespUserTemp extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('resp_user_temp');
     }
 }
