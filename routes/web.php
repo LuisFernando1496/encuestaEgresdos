@@ -40,7 +40,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     
     Route::post('/imprimir_encuesta', [QuestionsController::class, 'export'])->name('encuesta.imprimir');
     Route::get('/doc_encuesta', [QuestionsController::class, 'seePDF'])->name('doc.encuesta');
-    Route::post('imprimir', [QuestionsController::class, 'exportPDF'])->name('export');
+    Route::post('/chart_to_image', [QuestionsController::class, 'exportImage'])->name('exportImage');
     
     Route::post('/answer_update', [AnswersController::class, 'update'])->name('answers.update');
     

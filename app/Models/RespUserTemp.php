@@ -10,6 +10,8 @@ class RespUserTemp extends Model
     use HasFactory;
     protected $table = "resp_user_temp";
     protected $fillable = [
+        'num_control',
+        'name',
         'question',
         'answer',
         'total',

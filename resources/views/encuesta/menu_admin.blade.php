@@ -29,6 +29,79 @@
         <form action="{{ route('encuesta.imprimir') }}" method="post">
         @csrf
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <label class="px-4">Ingrese numero de control:</label>
+                            <input class="rounded-lg py-1 px-3" type="text" name="num_control" id="id_control" placeholder="">
+                            <input class="rounded-lg py-1 px-3" type="hidden" name="fileExport" value="PDF">
+                        </div>
+                        <br>
+                        <div class="px-6 py-4 whitespace-nowrap text-left">
+                            <label class="p-4">Periodo Escolar:</label>
+                            <div class="inline-flex">
+                                <select name="periodoEscolar" id="perdiodo_escolar" class="rounded-lg py-1 px-3">
+                                    <option value="">- Periodo -</option>
+                                    <option value="Enero-Junio">Enero - Junio</option>
+                                    <option value="Agosto-Diciembre">Agosto - Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="inline-flex">
+                                <label class="px-3" for="">Fecha de Inicio:</label>
+                                <input class="rounded-lg py-1 px-3" type="date" name="fecha_inicial" id="fecha_inicio">
+                                <label class="px-3" for="">Fecha Final:</label>
+                                <input class="rounded-lg py-1 px-3" type="date" name="fecha_fin" id="fecha_final">
+                            </div>
+                            <div class="px-6 py-1 whitespace-nowrap text-left">
+                                <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonPDF();">
+                                    Exportar PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br><hr><br>
+        <form action="{{ route('encuesta.imprimir') }}" method="post">
+        @csrf
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <label class="px-4">Ingrese numero de control:</label>
+                            <input class="rounded-lg py-1 px-3" type="text" name="num_control" id="id_control" placeholder="">
+                            <input class="rounded-lg py-1 px-3" type="hidden" name="fileExport" value="EXCEL">
+                        </div>
+                        <br>
+                        <div class="px-6 py-4 whitespace-nowrap text-left">
+                            <label class="p-4">Periodo Escolar:</label>
+                            <div class="inline-flex">
+                                <select name="periodoEscolar" id="perdiodo_escolar" class="rounded-lg py-1 px-3">
+                                    <option value="">- Periodo -</option>
+                                    <option value="Enero-Junio">Enero - Junio</option>
+                                    <option value="Agosto-Diciembre">Agosto - Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="inline-flex">
+                                <label class="px-3" for="">Fecha de Inicio:</label>
+                                <input class="rounded-lg py-1 px-3" type="date" name="fecha_inicial" id="fecha_inicio">
+                                <label class="px-3" for="">Fecha Final:</label>
+                                <input class="rounded-lg py-1 px-3" type="date" name="fecha_fin" id="fecha_final">
+                            </div>
+                            <div class="px-6 py-1 whitespace-nowrap text-left">
+                                <button class="text-green-600 hover:text-green-900 bg-green-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonPDF();">
+                                    Exportar Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- <form action="{{ route('encuesta.imprimir') }}" method="post">
+        @csrf
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -97,12 +170,13 @@
                 </div>
                 <hr>
             </div>
-        </form>
+        </form> -->
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>                                        //TODO:  Solucionar el "problema" del id..
     function buttonPDF() {
-        $('#fileExport').val('PDF');
+        document.getElementById('#fileExport').val('PDF');
     }
     function buttonEXCEL() {
         $('#fileExport').val('EXCEL');

@@ -166,27 +166,24 @@ class ExportData {
                 
                 $count = count($consulta);
                 
-                $chartsData['question'][] = $value->question;
                 if($answer_num != null) {
-                    $chartsData['answer'][] = $answer_num;
+                    $d = $answer_num;
                 }
                 if($answer_text != null) {
-                    $chartsData['answer'][] = $answer_text;
-                }if($answer_other_specify != null) {
-                    $chartsData['answer'][] = $answer_other_specify;
+                    $d = $answer_text;
                 }
-                $chartsData['total'][] = $count;
-            }
-            
-            for($i = 0; $i < count($chartsData); $i++) {
-                for ($j = 0; $j < count($chartsData); $j++) { 
-                    if($chartsData[$j] == $chartsData[$j + 1]) {
-                        unset($chartsData[$j]);
-                    }
+                if($answer_other_specify != null) {
+                    $d = $answer_other_specify;
                 }
+
+                $dd[] = array(
+                    'num_control' => $value->num_control,
+                    'question' => $value->question,
+                    'answer' => $d,
+                    'total' => $count,
+                );
             }
-            
-            return $data;
+            $save = RespUserTemp::insert($dd);
         }                    
     }
 
@@ -218,7 +215,6 @@ class ExportData {
         }
         
         foreach ($data as $value) {
-            
             $question = $value->question;
             $answer_num = $value->answer_num;
             $answer_text = $value->answer_text;
@@ -245,6 +241,7 @@ class ExportData {
             }
 
             $dd[] = array(
+                'num_control' => $value->num_control,
                 'question' => $value->question,
                 'answer' => $d,
                 'total' => $count,
