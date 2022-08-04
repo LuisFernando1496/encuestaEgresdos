@@ -112,13 +112,12 @@ class QuestionsController extends Controller
 
                 $charts = new UserChart;
                 $charts->labels($labels);
-                $charts->dataset('Total de Respuestas', 'line', $dataset)
-                        ->color("rgb(255, 99, 132)");
+                $charts->dataset('Total de Respuestas', 'line', $dataset);
+                //dd($charts);
+                return view('encuesta.charts_image', compact('charts'));
 
-                //return view('encuesta.charts_image', compact('charts'));
-
-                $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title'));
-                return $pdf->download("$title");
+                // $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title','charts'));
+                // return $pdf->download("$title");
                 break;
             case 'EXCEL':
                 $date = Carbon::now();
