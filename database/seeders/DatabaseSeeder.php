@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             ContactInformationSeeder::class,
             JobsSeeder::class,
             ActivitySeeder::class,
-            ContinuingEducationSeeder::class
+            ContinuingEducationSeeder::class,
+            QuestionsRespUserSeeder::class
             ]);
     }
 }

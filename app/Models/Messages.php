@@ -10,6 +10,7 @@ class Messages extends Model
     use HasFactory;
     protected $fillable = [
         "to_id", 
+        "by_id", 
         "mensaje",
         'status'
     ];
@@ -18,5 +19,9 @@ class Messages extends Model
     public function user()
     {
        return $this->belongsTo(User::class,'to_id','id');
+    }
+    public function userBy()
+    {
+       return $this->belongsTo(User::class,'by_id','id');
     }
 }

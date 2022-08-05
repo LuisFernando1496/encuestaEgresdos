@@ -1,8 +1,8 @@
 @php
 $message = App\Models\Messages::orderBy('created_at', 'desc')
-    ->select('to_id')
-    ->distinct('to_id')
-    ->orderBy('to_id','DESC')
+    ->select('by_id')
+    ->distinct('by_id')
+    ->orderBy('by_id','DESC')
     ->get();
     
 @endphp
@@ -19,9 +19,9 @@ $message = App\Models\Messages::orderBy('created_at', 'desc')
                 <div class="mt-4">
              
               @forelse ($message as $item)
-              @if ( Auth::user()->id != $item->to_id)
+              @if ( Auth::user()->id != $item->by_id)
                 @php
-                $user = App\Models\User::find($item->to_id);
+                $user = App\Models\User::find($item->by_id);
                 @endphp
                    <form action="{{route('reenvio',[$user->id,$user->name])}}" id="chat">  
                          <div class="relative flex flex-col justify-end overflow-hidden rounded-b-xl pt-6" >

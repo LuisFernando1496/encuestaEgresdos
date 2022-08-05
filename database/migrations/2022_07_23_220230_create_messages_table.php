@@ -17,6 +17,8 @@ class CreateMessagesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('to_id')->nullable();
             $table->foreign('to_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('by_id')->nullable();
+            $table->foreign('by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->text("mensaje");
             $table->boolean('status')->default(false);
             $table->timestamps();

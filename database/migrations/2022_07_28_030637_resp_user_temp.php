@@ -16,7 +16,7 @@ class RespUserTemp extends Migration
         Schema::create('resp_user_temp', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('num_control');
-            $table->text('name');
+            //$table->text('name');
             $table->text('question');
             $table->text('answer');
             $table->unsignedBigInteger('total');

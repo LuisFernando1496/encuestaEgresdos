@@ -17,8 +17,8 @@ class CreateQuestionRespUserTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('category');
-            $table->string('question');
+            $table->text('category');
+            $table->text('question');
             $table->string('sub_question')->nullable();
             $table->string('answer_num')->default('0');
             $table->string('answer_text')->default('0');

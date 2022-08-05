@@ -11,6 +11,7 @@
             <div class="m-1 sm:p-0 xl:p-20">
                 
                 <br>
+                  @if (auth()->user()->roles[0]->name == 'admin')
                 <div class="flex-col flex">
                     <div class="block">
                         <a class="text-yellow-600 hover:text-yellow-900 bg-yellow-100 rounded-lg py-1 px-3 float-left" href="{{ route('encuesta.create') }}">
@@ -18,7 +19,7 @@
                         </a>
                     </div>
                 </div>
-                  
+                    @endif
                 <div class="border-solid border-2 rounded-lg dark:border-indigo-900 m-5 bg-violet-100">
                 @forelse ($questions as $i => $pregunta)
                    
@@ -57,13 +58,26 @@
                                                 id="divOption{{ $answer->id }}" style="cursor: pointer">
 
                                                 <input type="hidden" name="category{{$pregunta->id}}" value="{{$pregunta->categoryQuestion->name}}">
-
+                                                   
                                                 <input class="form-check-input" type="radio"
                                                     name="pregunta{{ $pregunta->id }}" id="{{ $answer->id }}"
                                                     value="{{ $answer->option }}" >
                                                 <label class="form-check-label" for="{{ $answer->id }}">
                                                     {{ $answer->option }}</label>
-
+                                                    @if ($answer->option == 1)
+                                                        <strong>(MUY BUENA)</strong>
+                                                    @endif
+                                                    @if ($answer->option == 2)
+                                                        <strong>(BUENA)</strong>
+                                                    @endif
+                                                    @if ($answer->option == 3)
+                                                        <strong>(REGULAR)</strong>
+                                                    @endif
+                                                    @if ($answer->option == 4)
+                                                        <strong>(MALA)</strong>
+                                                    @endif
+                                                   
+                                                    
                                             </div>
                                         @endforeach
 

@@ -16,9 +16,26 @@ use App\Charts\UserChart;
 
 class QuestionsController extends Controller
 {
+
+    public function dataChart()
+    {
+        $pertenencia = QuestionsRespUser::all()->count();
+        
+        $data=['label'=>'Cantidad de respuestas','dataChart'=>$pertenencia];
+         return json_encode($data);
+
+    }
+    
     public function index()
     {
-        return view('encuesta.menu_admin');
+        if (auth()->user()->roles[0]->name == 'admin')
+        {
+              return view('encuesta.menu_admin');
+        }
+        else{
+            return redirect()->route('encuesta.show');
+        }
+      
     }
 
 
@@ -29,6 +46,7 @@ class QuestionsController extends Controller
         return view('encuesta.show_edit', compact('questions'));
     }
 
+    
 
     public function store(Request $request)
     {
@@ -139,12 +157,12 @@ class QuestionsController extends Controller
         return view('encuesta.charts_image');
     }
 
-    public function exportImage(Request $request) {
-        $img = str_replace('data:image/png;base64,', ' ', $img);
-        $fileData = base64_decode($img);
-        $filename = date('dmY_his').'.'.$path->getClientOriginalExtension();
-        $path->move('img',$filename);
-    }
+    // public function exportImage(Request $request) {
+    //     $img = str_replace('data:image/png;base64,', ' ', $img);
+    //     $fileData = base64_decode($img);
+    //     $filename = date('dmY_his').'.'.$path->getClientOriginalExtension();
+    //     $path->move('img',$filename);
+    // }
 
     // public function seeExcel() {
     //     $data = $getData;

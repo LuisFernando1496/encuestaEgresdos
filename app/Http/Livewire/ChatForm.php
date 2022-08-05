@@ -38,8 +38,9 @@ class ChatForm extends Component
         // si no existe, generamos uno con Faker
         $this->usuario = request()->query('usuario', $this->usuario) ?? $this->faker->name;                         
         $this->userAdminChat = auth()->user()->roles[0]->pivot->role_id;
+        $this->userLoged = auth()->user()->id;
         // Generamos el primer texto de prueba
-        $this->mensaje = $this->faker->realtext(20);
+     //   $this->mensaje = $this->faker->realtext(20);
     }
    
     public function enviarMensaje()
@@ -50,7 +51,7 @@ class ChatForm extends Component
 
         $user = auth()->user()->roles;
         $userAdmin = Role::find(1);
-        $this->userLoged = auth()->user()->id;
+       
        
         if(sizeof($user)>0)
         {
@@ -69,21 +70,22 @@ class ChatForm extends Component
        // $userLoged = auth()->user()->id;
         Messages::create([
             "to_id" => $this->userTo,
-            "mensaje" => $this->mensaje
+            "mensaje" => $this->mensaje,
+            "by_id" => $this->userLoged
         ]);
         
         // Generamos el evento para Pusher
         // Enviamos en la "push" el usuario y mensaje (aunque en este ejemplo no lo utilizamos)
         // pero nos vale para comprobar en PusherDebug (y por consola) lo que llega...
-        event(new NuevoMensaje($this->userTo, $this->mensaje));
+        event(new NuevoMensaje($this->userTo, $this->mensaje,$this->userLoged));
         
         // Este evento es para que lo reciba el componente
         // por Javascript y muestre el ALERT BOOSTRAP de "enviado"
         $this->emit('actualizarMensajes');
         
         // Creamos un nuevo texto aleatorio (para el próximo mensaje)
-        $this->faker = \Faker\Factory::create();       
-        $this->mensaje = $this->faker->realtext(20);
+       // $this->faker = \Faker\Factory::create();       
+       $this->mensaje = '';
     
     }    
 

@@ -15,12 +15,14 @@ class NuevoMensaje implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $usuario;
+    public $usuarioBy;
     public $mensaje;
 
-    public function __construct($usuario, $mensaje)
+    public function __construct($usuario, $mensaje,$usuarioBy)
     {
         $this->usuario = $usuario;
         $this->mensaje = $mensaje;
+        $this->usuarioBy = $usuarioBy;
     }
     
     public function broadcastOn()
