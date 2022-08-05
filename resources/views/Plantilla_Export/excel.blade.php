@@ -4,6 +4,7 @@
     <!-- <td><img src="{{ asset('img/logo_ittg.png') }}"></td> -->
     @foreach($data as $value)
         <tr><td><strong>Num_Control: {{ $value->num_control }}</strong></td></tr>
+        <tr><td><strong>Nombre: {{ $value->name }}</strong></td></tr>
         @foreach($data as $data_r)
             <tr>
                 <td>{{ $data_r->category }}</td>

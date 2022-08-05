@@ -8,6 +8,7 @@ use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
 use App\Models\CategoryQuestions;
 use App\Models\RespUserTemp;
+use App\Models\User;
 use Carbon\Carbon;
 
 
@@ -124,6 +125,8 @@ class ExportData {
         
         foreach($data_num_control as $value) {
             $alumno_id = ContactInformation::select('id')->where('enrollment', $value)->get()->pluck('id');
+            $user_id = ContactInformation::select('user_id')->where('enrollment', $value)->get()->pluck('user_id');
+            $student = User::select('name')->where('id', $user_id[0])->get()->pluck('name');
             if($alumno_id->isEmpty()) {
                 return 'Error!, Verifique si el numero de control es correcto.';
             }
@@ -178,6 +181,7 @@ class ExportData {
 
                 $dd[] = array(
                     'num_control' => $value->num_control,
+                    'name' => $student[0],
                     'question' => $value->question,
                     'answer' => $d,
                     'total' => $count,
@@ -202,6 +206,8 @@ class ExportData {
         foreach($question_user as $item) {
             $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
             $num = ContactInformation::select('enrollment')->where('id', $item->user_id)->get()->pluck('enrollment');
+            $user_id = ContactInformation::select('user_id')->where('enrollment', $num[0])->get()->pluck('user_id');
+            $student = User::select('name')->where('id', $user_id[0])->get()->pluck('name');
 
             $dato = new \stdClass();
             $dato->num_control = $num[0];
@@ -242,6 +248,7 @@ class ExportData {
 
             $dd[] = array(
                 'num_control' => $value->num_control,
+                'name' => $student[0],
                 'question' => $value->question,
                 'answer' => $d,
                 'total' => $count,

@@ -12,20 +12,11 @@ use App\Export\ExcelExport;
 use App\Models\RespUserTemp;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Charts\UserChart;
+//use App\Charts\UserChart;
 
 class QuestionsController extends Controller
 {
 
-    public function dataChart()
-    {
-        $pertenencia = QuestionsRespUser::all()->count();
-        
-        $data=['label'=>'Cantidad de respuestas','dataChart'=>$pertenencia];
-         return json_encode($data);
-
-    }
-    
     public function index()
     {
         if (auth()->user()->roles[0]->name == 'admin')
@@ -109,13 +100,13 @@ class QuestionsController extends Controller
     }
 
     public function export(Request $request) {
-        $labels = [];
-        $dataset = [];
-
         $dato = ExportData::Export($request);
 
-        //$chart = QuestionsController::charts();
-        //partName = date('dmY_his');
+        // $chart = QuestionsController::charts();
+        // return view('encuesta.charts_image');
+        
+        // $v = QuestionsController::exportImage();
+        // dd($v);
 
         switch ($request['fileExport']) {
             case 'PDF':
@@ -123,19 +114,8 @@ class QuestionsController extends Controller
                 $date = Carbon::now();
                 $title = "Reporte_$date.pdf";
 
-                foreach($data as $value) {
-                    $labels[] = $value->question;
-                    $dataset[] = $value->total;
-                }
-
-                $charts = new UserChart;
-                $charts->labels($labels);
-                $charts->dataset('Total de Respuestas', 'line', $dataset);
-                //dd($charts);
-                return view('encuesta.charts_image', compact('charts'));
-
-                // $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title','charts'));
-                // return $pdf->download("$title");
+                $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title'));
+                return $pdf->download("$title");
                 break;
             case 'EXCEL':
                 $date = Carbon::now();
@@ -151,18 +131,32 @@ class QuestionsController extends Controller
 
     public function charts() {
         $charts = RespUserTemp::all();
+        return json_encode($charts);
     }
 
-    public function seePDF() {
-        return view('encuesta.charts_image');
+    public function exportImage() {
+        $valores = RespUserTemp::all();
+        foreach($valores as $val) {
+            $label[] = array($val->question);
+            $dataset[] = array($val->total);
+        }
+        
+        //dd($label);
+        $chart = "type: 'bar',
+        data: {
+            labels: $label,
+            datasets: [{
+                label: '', data: $dataset}
+            }]
+        }
+        ";
+        $chart = urlencode($chart);
+        return "https://quickchart.io/chart?width=250&height=180&format=png&c={$chart}";
+        // $img = str_replace('data:image/png;base64,', ' ', $img);
+        // $fileData = base64_decode($img);
+        // $filename = date('dmY_his').'.'.$path->getClientOriginalExtension();
+        // $path->move('img',$filename);
     }
-
-    // public function exportImage(Request $request) {
-    //     $img = str_replace('data:image/png;base64,', ' ', $img);
-    //     $fileData = base64_decode($img);
-    //     $filename = date('dmY_his').'.'.$path->getClientOriginalExtension();
-    //     $path->move('img',$filename);
-    // }
 
     // public function seeExcel() {
     //     $data = $getData;

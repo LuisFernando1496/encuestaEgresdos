@@ -72,6 +72,8 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/messages',[MessagesController::class,'index'])->name('messages.index');
     Route::get('/messages/admin',[MessagesController::class,'admindChat'])->name('admindChat');
     Route::get('/messages/admin/data/{id}/{name}',[MessagesController::class,'redirect'])->name('reenvio');
-    Route::get('/dataChart',[QuestionsController::class,'dataChart']);
+    
+    Route::get('/dataCharts', [QuestionsController::class, 'charts']);
+    Route::post('/imageCharts', [QuestionsController::class, 'exportImage'])->name('export.document');
 });
 

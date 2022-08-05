@@ -9,6 +9,10 @@
         
     </head>
     <style>
+        .logo{
+            float: left; 
+            width: 100px;
+        }
         .logo_izq{
             float: left; 
             width: 100px;
@@ -56,14 +60,15 @@
     </style>
     <body>
         <div class="data-center-items">
-            <!-- <img class="logo_izq" src="{{ asset('img/Logo_TecNM.png') }}"> -->
+            <img class="logo logo_izq" src="{{ asset('img/Logo_TecNM.png') }}">
             <h5 class="titulo_centro">Instituto Tecnológico De México (Tuxtla Gutiérrez)</h5>
-            <!-- <img class="logo_der" src="{{ asset('img/logo_ittg.png') }}"> -->
+            <img class="logo logo_der" src="{{ asset('img/logo_ittg.png') }}">
         </div>
         @foreach($data as $data_r)
             <div class="center-items-title">
                 <h4>Datos Del Egresado</h4>
                 <label>N° de Control: {{ $data_r->num_control }}</label><br>
+                <label>Nombre: {{ $data_r->name }}</label><br>
             </div>
             <table>
                 <tbody>
@@ -77,11 +82,8 @@
                 </tbody>
             </table>
         @endforeach
-
-        {!! $charts->container() !!}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
-        {!! $charts->script() !!}
         
+        <br>
         @foreach($data as $value)
             <div>{{ $value->question }}</div>
             <ul>
