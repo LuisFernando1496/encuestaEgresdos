@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answers;
 use App\Http\Requests\StoreAnswersRequest;
-use App\Http\Requests\UpdateAnswersRequest;
+use App\Http\Requests\Request;
 
 class AnswersController extends Controller
 {
@@ -68,7 +68,7 @@ class AnswersController extends Controller
      * @param  \App\Models\Answers  $answers
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAnswersRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $answers = Answers::find($id);
         $answers->update($request->all());

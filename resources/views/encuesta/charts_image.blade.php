@@ -9,20 +9,19 @@
             <div class="flex flex-col">
                 <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="max-w-16xl sm:px-6 lg:px-16 my-5">
+                        <div class="max-w-16xl sm:px-6 lg:px-16 my-5" id="chart_area">
                             <canvas id="myChart" class="max-w-16xl sm:px-6 lg:px-16 my-5"></canvas>
                         </div>
-                        <form action="{{ route('export.document') }}" method="post">
+                        <form action="{{ route('export.document') }}" method="post" id="makePDF">
                         @csrf
-                            <img src="" id="chartImage">
-                            <button class="text-blue-600 hover:text-blue-900 bg-blue-100 rounded-lg py-1 px-3 text-right" type="submit">Descargar Reporte</button>
+                            <input type="hidden" name="chartData" id="chartData">
+                            <button class="text-blue-600 hover:text-blue-900 bg-blue-100 rounded-lg py-1 px-3 text-right" id="ButtonSubmit">Descargar Reporte</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
     <script>
         var labels = [];
         var data = [];
@@ -32,7 +31,7 @@
             dataType: 'json',
             success: function(resp) {
                 for(var x = 0; x < resp.length; x++) {
-                    labels.push(resp[x].question);
+                    labels.push("'"+resp[x].question+"'");
                     data.push(resp[x].total);
                 }
                 const ctx = document.getElementById('myChart').getContext('2d');
@@ -59,6 +58,7 @@
                             }
                         }
                     }
+                    
                 });
 
             },
@@ -67,10 +67,12 @@
             },
         });
 
-        const chart = document.getElementById('myChart');
-        const image = document.querySelector('#chartImage');
-        const img = chart.toDataURL();
-        image.src = img;
-        console.log('Blob', img);
+        const chart = document.querySelector('#myChart');
+        
+        $('#ButtonSubmit').click(function() {
+            $('#chartData').val(chart.toDataURL());
+            $('#makePDF').submit();
+        });
+
     </script>
 </x-app-layout>

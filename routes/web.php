@@ -36,11 +36,11 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/encuesta_create', [QuestionsController::class, 'create'])->name('encuesta.create');
     Route::post('/encuesta', [QuestionsController::class, 'store'])->name('encuesta.store');
     Route::get('/ver_encuesta', [QuestionsController::class, 'show'])->name('encuesta.show');
-    Route::post('/question_update', [QuestionsController::class, 'update'])->name('question.update');
-    
+    Route::post('/question/{question}', [QuestionsController::class, 'update'])->name('question.update');
+    Route::post('/question/answer/{question}', [QuestionsController::class, 'answerUpdate'])->name('answers.update');
     Route::post('/imprimir_encuesta', [QuestionsController::class, 'export'])->name('encuesta.imprimir');
-    
-    Route::post('/answer_update', [AnswersController::class, 'update'])->name('answers.update');
+    Route::get('/dataCharts', [QuestionsController::class, 'charts']);
+    Route::post('/imageCharts', [QuestionsController::class, 'exportImage'])->name('export.document');
     
     Route::get('/studens',[UsersController::class, 'indexStudents'])->name('studens');
     Route::get('/graduates',[UsersController::class, 'indexGraduates'])->name('graduates');
@@ -72,8 +72,5 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/messages',[MessagesController::class,'index'])->name('messages.index');
     Route::get('/messages/admin',[MessagesController::class,'admindChat'])->name('admindChat');
     Route::get('/messages/admin/data/{id}/{name}',[MessagesController::class,'redirect'])->name('reenvio');
-    
-    Route::get('/dataCharts', [QuestionsController::class, 'charts']);
-    Route::post('/imageCharts', [QuestionsController::class, 'exportImage'])->name('export.document');
 });
 

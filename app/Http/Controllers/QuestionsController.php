@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Questions;
+use App\Models\Answers;
 use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
 use App\Export\ExportData;
@@ -12,7 +13,6 @@ use App\Export\ExcelExport;
 use App\Models\RespUserTemp;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
-//use App\Charts\UserChart;
 
 class QuestionsController extends Controller
 {
@@ -93,6 +93,12 @@ class QuestionsController extends Controller
         return back();
     }
 
+    public function answerUpdate(Request $request, $id)
+    {
+        $answers = Answers::find($id);
+        $answers->update($request->all());
+        return back();
+    }
 
     public function destroy(Questions $questions)
     {
@@ -101,21 +107,12 @@ class QuestionsController extends Controller
 
     public function export(Request $request) {
         $dato = ExportData::Export($request);
-
-        // $chart = QuestionsController::charts();
-        // return view('encuesta.charts_image');
         
-        // $v = QuestionsController::exportImage();
-        // dd($v);
-
         switch ($request['fileExport']) {
             case 'PDF':
-                $data = RespUserTemp::all();
-                $date = Carbon::now();
-                $title = "Reporte_$date.pdf";
+                $chart = QuestionsController::charts();
+                return view('encuesta.charts_image');
 
-                $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title'));
-                return $pdf->download("$title");
                 break;
             case 'EXCEL':
                 $date = Carbon::now();
@@ -134,43 +131,20 @@ class QuestionsController extends Controller
         return json_encode($charts);
     }
 
-    public function exportImage() {
-        $valores = RespUserTemp::all();
-        foreach($valores as $val) {
-            $label[] = array($val->question);
-            $dataset[] = array($val->total);
-        }
+    public function exportImage(Request $request) {
+        $imgChart = $request->get('chartData');
+        $img = str_replace('data:image/png;base64,', ' ', $imgChart);
+        $fileData = base64_decode($img);
+        $filename = date('dmY_his').'.jpeg';
+        $path = public_path()."\img\\".$filename;
+        file_put_contents($path, $fileData);
         
-        //dd($label);
-        $chart = "type: 'bar',
-        data: {
-            labels: $label,
-            datasets: [{
-                label: '', data: $dataset}
-            }]
-        }
-        ";
-        $chart = urlencode($chart);
-        return "https://quickchart.io/chart?width=250&height=180&format=png&c={$chart}";
-        // $img = str_replace('data:image/png;base64,', ' ', $img);
-        // $fileData = base64_decode($img);
-        // $filename = date('dmY_his').'.'.$path->getClientOriginalExtension();
-        // $path->move('img',$filename);
+        $data = RespUserTemp::all();
+        $date = Carbon::now();
+        $title = "Reporte_$date.pdf";
+
+        $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title','filename'));
+        return $pdf->download("$title");
+            
     }
-
-    // public function seeExcel() {
-    //     $data = $getData;
-
-    //     $date = Carbon::now();
-    //     $title = "Reporte_$date.xlsx";
-
-    //     return view('encuesta.charts_image', compact('data', 'title'));
-    // }
-
-    // public function exportDoc(Request $request) {
-    //     //code...
-
-    //     $pdf = \PDF::loadView('Plantilla_Export.plantilla_reporte', compact('data'));
-    //     return $pdf->download('title');
-    // }
 }

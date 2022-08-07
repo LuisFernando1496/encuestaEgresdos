@@ -9,9 +9,15 @@
         
     </head>
     <style>
-        .logo{
-            float: left; 
-            width: 100px;
+        .chart{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-collapse: collapse;
+            width: 550px;
+            height: 300px;
+            boder-radius: 4px;          
         }
         .logo_izq{
             float: left; 
@@ -60,10 +66,11 @@
     </style>
     <body>
         <div class="data-center-items">
-            <img class="logo logo_izq" src="{{ asset('img/Logo_TecNM.png') }}">
+            <img class="logo_izq" src="img/Logo-TecNM.jpeg">
+            <img class="logo_der" src="img/logo-ittg.jpeg">
             <h5 class="titulo_centro">Instituto Tecnológico De México (Tuxtla Gutiérrez)</h5>
-            <img class="logo logo_der" src="{{ asset('img/logo_ittg.png') }}">
         </div>
+        <br><br><br>
         @foreach($data as $data_r)
             <div class="center-items-title">
                 <h4>Datos Del Egresado</h4>
@@ -82,15 +89,9 @@
                 </tbody>
             </table>
         @endforeach
-        
+        <br><br>
+        <label class="titulo_centro">Promedio de respuestas por pregunta</label>
+        <img class="chart" src="img/{{ $filename }}">
         <br>
-        @foreach($data as $value)
-            <div>{{ $value->question }}</div>
-            <ul>
-                @foreach($data as $dato)
-                    <li>Respuesta.- {{ $dato->answer }} <span> Total.- {{ $dato->total }}</span></li>
-                @endforeach
-            </ul>
-        @endforeach
     </body>
 </html>

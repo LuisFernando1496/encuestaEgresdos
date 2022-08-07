@@ -48,7 +48,7 @@
                         <label for="" class="px-3">Pregunta</label>
                         <form action="{{ route('question.update', $pregunta->id) }}" method="post">
                         @csrf
-                            <input type="text" name="question" value="{{ $pregunta->question }}" class="form-input rounded-md shadow-sm mt-1 block w-full" id="questionInput{{ $pregunta->id }}"/>
+                            <input type="text" name="question" value="{{ $pregunta->question }}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <div class="px-6 py-1 whitespace-nowrap text-right">
                                 <button 
                                     class="px-6 py-2 whitespace-nowrap text-right px-4 text-green-600 hover:text-green-900 bg-emerald-100 rounded-lg py-1 px-3"
