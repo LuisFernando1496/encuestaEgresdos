@@ -111,14 +111,15 @@ class QuestionsController extends Controller
         switch ($request['fileExport']) {
             case 'PDF':
                 $chart = QuestionsController::charts();
-                return view('encuesta.charts_image');
+                $fileReport = 'PDF';
+                return view('encuesta.charts_image',compact('fileReport'));
 
                 break;
             case 'EXCEL':
-                $date = Carbon::now();
-                $title = "Reporte_$date.xlsx";
-                
-                return Excel::download(new ExcelExport, "$title");
+                $chart = QuestionsController::charts();
+                $fileReport = 'EXCEL';
+                return view('encuesta.charts_image', compact('fileReport'));
+
                 break;
             default:
                 # code...
@@ -141,10 +142,25 @@ class QuestionsController extends Controller
         
         $data = RespUserTemp::all();
         $date = Carbon::now();
-        $title = "Reporte_$date.pdf";
 
-        $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title','filename'));
-        return $pdf->download("$title");
+        switch ($request->get('typeFile')) {
+            case 'PDF':
+                $title = "Reporte_$date.pdf";
+
+                $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title','filename'));
+                $delete = RespUserTemp::whereNotNull('id')->delete();
+                return $pdf->download("$title");
             
+                break;
+            case 'EXCEL':
+                $title = "Reporte_$date.xlsx";
+                
+                return Excel::download(new ExcelExport, "$title");
+            
+                break;
+            default:
+                # code...
+                break;
+        }    
     }
 }

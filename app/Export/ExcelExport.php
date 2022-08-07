@@ -13,7 +13,9 @@ class ExcelExport implements FromView
 
     public function view(): View {
         return view('Plantilla_Export.excel', [
-            'data' => RespUserTemp::all()
+            'data' => RespUserTemp::all(),
+            'filename' => date('dmY_his').'.jpeg',
+            'delete' => RespUserTemp::whereNotNull('id')->delete()
         ]);
     }
     

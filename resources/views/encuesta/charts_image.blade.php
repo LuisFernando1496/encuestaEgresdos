@@ -15,6 +15,7 @@
                         <form action="{{ route('export.document') }}" method="post" id="makePDF">
                         @csrf
                             <input type="hidden" name="chartData" id="chartData">
+                            <input type="hidden" name="typeFile" value="{{ $fileReport }}">
                             <button class="text-blue-600 hover:text-blue-900 bg-blue-100 rounded-lg py-1 px-3 text-right" id="ButtonSubmit">Descargar Reporte</button>
                         </form>
                     </div>
