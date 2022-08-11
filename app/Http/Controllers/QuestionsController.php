@@ -67,7 +67,7 @@ class QuestionsController extends Controller
                 'status',
             ]);
         }
-        return 'Guardado';
+        return redirect()->route('dashboard')->with('mensaje',"Encuesta realizada, Gracias por responder!!");;
     }
 
 

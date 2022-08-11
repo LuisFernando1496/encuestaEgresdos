@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             JobsSeeder::class,
             ActivitySeeder::class,
             ContinuingEducationSeeder::class,
-            QuestionsRespUserSeeder::class
+        //   QuestionsRespUserSeeder::class
             ]);
     }
 }
