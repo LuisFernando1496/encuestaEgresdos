@@ -31,7 +31,7 @@ class ExportData {
             case 'escolar':
                 
                 if($request['num_control'] != null) {
-                    if($request['periodoEscolar'] = 'Enero-Junio') {
+                    if($request['periodoEscolar'] == 'Enero-Junio') {
                         $now = Carbon::now();
                         $n = $now->year;
                         
@@ -55,14 +55,14 @@ class ExportData {
 
                     return $data;
                 } else {
-                    if($request['periodoEscolar'] = 'Enero-Junio') {
+                    if($request['periodoEscolar'] == 'Enero-Junio') {
                         $now = Carbon::now();
                         $n = $now->year;
                         
                         $a = strtotime("$n-01-01 00:00:00");
                         $inicio = date('Y-m-d H:i:s', $a);
 
-                        $b = strtotime("$n-06-01 00:00:00");
+                        $b = strtotime("$n-06-30 00:00:00");
                         $final = date('Y-m-d H:i:s', $b);
                     } else {
                         $now = Carbon::now();
@@ -71,7 +71,7 @@ class ExportData {
                         $a = strtotime("$n-08-01 00:00:00");
                         $inicio = date('Y-m-d H:i:s', $a);
 
-                        $b = strtotime("$n-12-01 00:00:00");
+                        $b = strtotime("$n-12-31 00:00:00");
                         $final = date('Y-m-d H:i:s', $b);
                     }
 
@@ -131,10 +131,11 @@ class ExportData {
                 return 'Error!, Verifique si el numero de control es correcto.';
             }
             
-            // $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
-            //                                   ->where('created_at', '>=', $inicio)
-            //                                   ->where('created_at', '<=', $final)->get();
-            $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
+            $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
+                                              ->whereDate('created_at', '>=', $inicio)
+                                              ->whereDate('created_at', '<=', $final)
+                                              ->get();
+            
             if($question_user->isEmpty()) {
                 return "Error! No se encontraron encuestas contestadas del num de control $value";
             }
@@ -163,7 +164,7 @@ class ExportData {
                     $consulta = QuestionsRespUser::where('question', $question)
                                                  ->where('answer_num', $answer_num)
                                                  ->where('answer_text', $answer_text)
-                                                 ->where('answer_ specify', $answer_other_specify)
+                                                 ->where('answer_other_specify', $answer_other_specify)
                                                  ->get();
                 }
                 
@@ -194,12 +195,11 @@ class ExportData {
     public function getData($inicio, $final) {
         $data = [];
         
-        // $question_user = QuestionsRespUser::where('created_at', '<=', $inicio)
-        //                                   ->where('created_at', '>=', $final)
-        //                                   ->get();
-        $question_user = QuestionsRespUser::all();
-        dd($question_user);
-        if($question_user->isEmpty()) {
+        $question_user = QuestionsRespUser::whereDate('created_at', '>=', $inicio)
+                                          ->whereDate('created_at', '<=', $final)
+                                          ->get();
+        
+         if($question_user->isEmpty()) {
             return "Error! No se encontraron encuestas contestadas en ese rango.";
         }
 
