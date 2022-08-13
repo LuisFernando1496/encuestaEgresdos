@@ -50,7 +50,9 @@ class CreateNewUser implements CreatesNewUsers
                         'phone_house' => $input['phone_house'],
                         'user_id' => $user->id,
                     ]);
-            
+                 
+                       $user->roles()->attach(2);
+                 
                     return $user;
                
                     

@@ -236,12 +236,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="graduated" id="graduated" value = "0">
-                            <div class="form-group">
-                                <span class="form-label">Celular</span>
-                                <input class="form-control" type="tel" name="smart_phone"
-                                    placeholder="Ingresa tu numero celular de contacto">
-                            </div>
                             <div class="form-group">
                                 <span class="form-label">Contraseña</span>
                                 <input class="form-control" type="password" name="password" >
@@ -251,6 +245,14 @@
                                 <input class="form-control" type="password" name="password_confirmation" >
 
                             </div>
+                            <input type="hidden" name="graduated" id="graduated" value = "0">
+                            <div class="form-group">
+                                <span class="form-label">Celular</span>
+                                <input class="form-control" type="tel" name="smart_phone"
+                                    placeholder="Ingresa tu numero celular de contacto">
+                            </div>
+                            
+                           
 
                             <div class="form-group">
                                 <span class="form-label">Fecha de egreso</span>
@@ -274,7 +276,7 @@
                                     <div class="form-group">
                                         <span class="form-label">Segundo Email</span>
                                         <input class="form-control" type="email" name="second_email"
-                                            placeholder="Ingresa un correo alternativo">
+                                            placeholder="Ingresa un correo alternativo (opcional)">
                                     </div>
                                 </div>
                             </div>

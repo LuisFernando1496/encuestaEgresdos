@@ -17,7 +17,7 @@ class CreateContactInformationTable extends Migration
             $table->id();
             $table->string("enrollment",8)->unique();
             $table->string("address");
-            $table->string("second_email");
+            $table->string("second_email")->nullable();
              $table->timestamp('date_graduate')->nullable();
              $table->string("phone_house",10)->unique();
              $table->unsignedBigInteger('user_id');
