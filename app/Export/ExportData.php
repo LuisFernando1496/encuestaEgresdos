@@ -131,10 +131,10 @@ class ExportData {
                 return 'Error!, Verifique si el numero de control es correcto.';
             }
             
-            // $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
-            //                                   ->where('created_at', '>=', $inicio)
-            //                                   ->where('created_at', '<=', $final)->get();
-           $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
+            $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
+                                              ->where('created_at', '>=', $inicio)
+                                              ->where('created_at', '<=', $final)->get();
+          // $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
             if($question_user->isEmpty()) {
                 return "Error! No se encontraron encuestas contestadas del num de control $value";
             }
@@ -194,10 +194,10 @@ class ExportData {
     public function getData($inicio, $final) {
         $data = [];
         
-        // $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
-        //                                   ->where('created_at', '<=', $final)
-        //                                   ->get();
-         $question_user = QuestionsRespUser::all();
+        $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
+                                          ->where('created_at', '<=', $final)
+                                          ->get();
+      //   $question_user = QuestionsRespUser::all();
         
         if($question_user->isEmpty()) {
             return "Error! No se encontraron encuestas contestadas en ese rango.";
