@@ -50,18 +50,12 @@
             text-align: center;
             border: blue solid;
         }
-        .center-items{
+        .center-item{
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
             border-collapse: collapse;
-        }
-        .answer-items{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
         }
     </style>
     <body>
@@ -81,9 +75,9 @@
                 <tbody>
                 @foreach($data as $d)
                     <tr>
-                        <td class="center items">{{ $d->category }}</td>
-                        <td class="center-items">{{ $d->question }}</td>
-                        <td class="center-items">Respuesta. {{ $d->answer }}</td>
+                        <td class="center-item">{{ $d->category }}</td>
+                        <td class="center-item">{{ $d->question }}</td>
+                        <td class="center-item">Respuesta. {{ $d->answer }}</td>
                     </tr>
                 @endforeach
                 </tbody>
