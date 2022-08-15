@@ -45,6 +45,13 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/studens',[UsersController::class, 'indexStudents'])->name('studens');
     Route::get('/graduates',[UsersController::class, 'indexGraduates'])->name('graduates');
 
+    Route::get('/users/create',[UsersController::class,'create'])->name('users.create');
+    Route::post('/users/crear',[UsersController::class,'store'])->name('users.store');
+    Route::get('/users/show/{id}',[UsersController::class,'show'])->name('users.show');
+    Route::get('/users/editar/{id}',[UsersController::class,'edit'])->name('users.edit');
+    Route::put('/users/{id}',[UsersController::class,'update'])->name('users.update');
+    Route::get('/users/eliminar/{id}',[UsersController::class,'destroy'])->name('users.destroy');
+
     Route::get('/jobs',[JobsController::class,'index'])->name('jobs.index'); 
     Route::get('/jobs/create',[JobsController::class,'create'])->name('jobs.create');
     Route::post('/jobs/crear',[JobsController::class,'store'])->name('jobs.store');

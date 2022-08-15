@@ -131,10 +131,10 @@ class ExportData {
                 return 'Error!, Verifique si el numero de control es correcto.';
             }
             
-            $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
-                                              ->where('created_at', '>=', $inicio)
-                                              ->where('created_at', '<=', $final)->get();
-            //$question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
+            // $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])
+            //                                   ->where('created_at', '>=', $inicio)
+            //                                   ->where('created_at', '<=', $final)->get();
+           $question_user = QuestionsRespUser::where('user_id', $alumno_id[0])->get();
             if($question_user->isEmpty()) {
                 return "Error! No se encontraron encuestas contestadas del num de control $value";
             }
@@ -194,18 +194,18 @@ class ExportData {
     public function getData($inicio, $final) {
         $data = [];
         
-        $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
-                                          ->where('created_at', '<=', $final)
-                                          ->get();
-        //$question_user = QuestionsRespUser::all();
+        // $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
+        //                                   ->where('created_at', '<=', $final)
+        //                                   ->get();
+         $question_user = QuestionsRespUser::all();
         
         if($question_user->isEmpty()) {
             return "Error! No se encontraron encuestas contestadas en ese rango.";
         }
 
         foreach($question_user as $item) {
-            $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
-            $num = ContactInformation::select('enrollment')->where('id', $item->user_id)->get()->pluck('enrollment');
+            $name = CategoryQuestions::select('name')->where('name', $item->category)->get()->pluck('name');
+            $num = ContactInformation::select('enrollment')->where('user_id', $item->user_id)->get()->pluck('enrollment');
             $user_id = ContactInformation::select('user_id')->where('enrollment', $num[0])->get()->pluck('user_id');
             $student = User::select('name')->where('id', $user_id[0])->get()->pluck('name');
 

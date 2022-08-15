@@ -19,7 +19,7 @@ class CreateContactInformationTable extends Migration
             $table->string("address");
             $table->string("second_email")->nullable();
              $table->timestamp('date_graduate')->nullable();
-             $table->string("phone_house",10)->unique();
+             $table->string("phone_house",10)->unique()->nullable();
              $table->unsignedBigInteger('user_id');
              $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 

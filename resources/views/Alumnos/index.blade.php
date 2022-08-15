@@ -13,9 +13,9 @@
                     <div class="flex-col flex">
                         <div class="block">
                        
-                                <a class="px-3 py-2 bg-indigo-700 text-indigo-400 hover:text-white float-right" href="#">
+                                {{-- <a class="px-3 py-2 bg-indigo-700 text-indigo-400 hover:text-white float-right" href="#">
                                     Crear Usuario
-                                </a>
+                                </a> --}}
                          
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                     <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                                        <input wire:model='search' class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" placeholder="Ingrese la Clave de usuario o Correo">
+                                        {{-- <input wire:model='search' class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" placeholder="Ingrese la Clave de usuario o Correo"> --}}
                                        
                                         {{-- @unless ($search == '')
                                             <button wire:click="clear" class="form-input rounded-md shadow-sm mt-1 ml-6 block btn text-red-500">
@@ -133,8 +133,8 @@
                                                         </td>
                                                         
                                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                            <button wire:click="edit({{$user}})"  class="text-indigo-600 hover:text-indigo-900 bg-purple-100 rounded-lg py-1 px-3">Editar</button>
-                                                            <button wire:click="deleteConfirmationModal({{$user}})" class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3">Eliminar</button>
+                                                            <a href="{{route('users.edit',$user->id)}}" class="text-indigo-600 hover:text-indigo-900 bg-purple-100 rounded-lg py-1 px-3">Editar</a>
+                                                            <a href="{{route('users.destroy',$user->id)}}" class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3">Eliminar</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

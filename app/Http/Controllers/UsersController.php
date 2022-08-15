@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactInformation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,13 +15,13 @@ class UsersController extends Controller
      */
     public function indexStudents()
     {
-        $users = User::where('graduated',false)->with('contactInformation')->paginate(5);
+        $users = User::where('graduated',false)->where('active',1)->with('contactInformation')->paginate(5);
       //  return $users;
         return view('Alumnos.index',compact('users'));
     }
     public function indexGraduates()
     {
-        $users = User::where('graduated',true)->with('contactInformation')->paginate(5);
+        $users = User::where('graduated',true)->where('active',1)->with('contactInformation')->paginate(5);
       //  return $users;
         return view('Graduados.index',compact('users'));
     }
@@ -66,7 +67,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('id',$id)->with('contactInformation')->first();
+        return view('users.edit',compact('user'));
     }
 
     /**
@@ -78,7 +80,11 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $contact = ContactInformation::where('user_id',$user->id)->first();
+        $user->update($request->all());
+        $contact->update($request->all());
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -89,6 +95,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->update([
+            'active'=>0
+        ]);
+        return redirect()->route('dashboard');
     }
 }
