@@ -17,9 +17,9 @@ class ExportData {
     public $chartsData;
     
     public function Export(Request $request) {
-        $periodo;
-        $inicio;
-        $final;
+        $periodo = 0;
+        $inicio = 0;
+        $final =0;
         
         if($request['periodoEscolar'] != null){
             $periodo = 'escolar';

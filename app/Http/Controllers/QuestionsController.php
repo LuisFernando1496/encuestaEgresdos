@@ -11,6 +11,7 @@ use App\Models\QuestionsRespUser;
 use App\Export\ExportData;
 use App\Export\ExcelExport;
 use App\Models\RespUserTemp;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -147,7 +148,7 @@ class QuestionsController extends Controller
             case 'PDF':
                 $title = "Reporte_$date.pdf";
 
-                $pdf = \PDF::loadView('Plantilla_Export.pdf',compact('data','title','filename'));
+                $pdf = Pdf::loadView('Plantilla_Export.pdf',compact('data','title','filename'));
                 $delete = RespUserTemp::whereNotNull('id')->delete();
                 return $pdf->download("$title");
             
