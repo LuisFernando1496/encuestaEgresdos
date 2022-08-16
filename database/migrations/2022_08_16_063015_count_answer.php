@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RespUserTemp extends Migration
+class CountAnswer extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class RespUserTemp extends Migration
      */
     public function up()
     {
-        Schema::create('resp_user_temp', function (Blueprint $table) {
+        Schema::create('count_answers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('num_control');
-            $table->text('name');
             $table->text('question');
             $table->text('answer');
+            $table->unsignedBigInteger('total');
         });
     }
 
@@ -29,6 +28,6 @@ class RespUserTemp extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resp_user_temp');
+        //
     }
 }

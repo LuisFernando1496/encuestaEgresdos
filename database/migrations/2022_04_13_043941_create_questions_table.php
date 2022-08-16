@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedBigInteger('question_id')->nullable();
             $table->foreign('question_id')->references('id')->on('questions');
             $table->boolean('status')->default(true);
+            $table->string('alias');
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ use App\Models\ContactInformation;
 use App\Models\QuestionsRespUser;
 use App\Models\CategoryQuestions;
 use App\Models\RespUserTemp;
+use App\Models\CountAnswer;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -170,25 +171,32 @@ class ExportData {
                 
                 $count = count($consulta);
                 
-                if($answer_num != null) {
+                if($answer_num != '0') {
                     $d = $answer_num;
                 }
-                if($answer_text != null) {
+                if($answer_text != '0') {
                     $d = $answer_text;
                 }
-                if($answer_other_specify != null) {
+                if($answer_other_specify != '0') {
                     $d = $answer_other_specify;
                 }
 
-                $dd[] = array(
+                $insertRepst[] = array(
                     'num_control' => $value->num_control,
                     'name' => $student[0],
                     'question' => $value->question,
                     'answer' => $d,
-                    'total' => $count,
                 );
+    
+                $insertCount[] = array(
+                    'question' => $value->question,
+                    'answer' => $d,
+                    'total' => $count
+                );
+    
             }
-            $save = RespUserTemp::insert($dd);
+            $save = RespUserTemp::insert($insertRepst);
+            $save = CountAnswer::insert($insertCount);
         }                    
     }
 
@@ -198,21 +206,19 @@ class ExportData {
         $question_user = QuestionsRespUser::where('created_at', '>=', $inicio)
                                           ->where('created_at', '<=', $final)
                                           ->get();
-      //   $question_user = QuestionsRespUser::all();
-        
+          
         if($question_user->isEmpty()) {
             return "Error! No se encontraron encuestas contestadas en ese rango.";
         }
-
+        
         foreach($question_user as $item) {
-            $name = CategoryQuestions::select('name')->where('id', $item->category)->get()->pluck('name');
             $student = User::select('name')->where('id', $item->user_id)->get()->pluck('name');
             $num = ContactInformation::select('enrollment')->where('user_id', $item->user_id)->get()->pluck('enrollment');
             
             
             $dato = new \stdClass();
             $dato->num_control = $num[0];
-            $dato->category = $name[0];
+            $dato->category = $item->category;
             $dato->question = $item->question;
             $dato->answer_num = $item->answer_num;
             $dato->answer_text = $item->answer_text;
@@ -220,7 +226,7 @@ class ExportData {
             
             array_push($data,(object) $dato);             
         }
-                
+               
         foreach ($data as $value) {
             $question = $value->question;
             $answer_num = $value->answer_num;
@@ -237,25 +243,32 @@ class ExportData {
             
             $count = count($consulta);
 
-            if($answer_num != null) {
+            if($answer_num != '0') {
                 $d = $answer_num;
             }
-            if($answer_text != null) {
+            if($answer_text != '0') {
                 $d = $answer_text;
             }
-            if($answer_other_specify != null) {
+            if($answer_other_specify != '0') {
                 $d = $answer_other_specify;
             }
 
-            $dd[] = array(
+            $insertRepst[] = array(
                 'num_control' => $value->num_control,
                 'name' => $student[0],
                 'question' => $value->question,
                 'answer' => $d,
-                'total' => $count,
             );
+
+            $insertCount[] = array(
+                'question' => $value->question,
+                'answer' => $d,
+                'total' => $count
+            );
+
         }
-        $save = RespUserTemp::insert($dd);
+        $save = RespUserTemp::insert($insertRepst);
+        $save = CountAnswer::insert($insertCount);
     }
 
 }

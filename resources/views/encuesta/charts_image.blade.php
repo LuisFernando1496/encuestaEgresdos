@@ -26,14 +26,16 @@
     <script>
         var labels = [];
         var data = [];
+        var count_p = 1;
         $.ajax({
             url: '/dataCharts',
             type: 'GET',
             dataType: 'json',
             success: function(resp) {
                 for(var x = 0; x < resp.length; x++) {
-                    labels.push("'"+resp[x].question+"'");
+                    labels.push('P: ' + count_p);
                     data.push(resp[x].total);
+                    count_p = count_p + 1;
                 }
                 const ctx = document.getElementById('myChart').getContext('2d');
                 const myChart = new Chart(ctx, {

@@ -12,6 +12,7 @@ class Questions extends Model
         'question', 
         'category_question_id',
         'question_id',
+        'alias',
         'status',
     ];
 

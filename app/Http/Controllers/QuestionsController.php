@@ -11,6 +11,7 @@ use App\Models\QuestionsRespUser;
 use App\Export\ExportData;
 use App\Export\ExcelExport;
 use App\Models\RespUserTemp;
+use App\Models\CountAnswer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -129,7 +130,7 @@ class QuestionsController extends Controller
     }
 
     public function charts() {
-        $charts = RespUserTemp::all();
+        $charts = CountAnswer::all();
         return json_encode($charts);
     }
 
@@ -150,6 +151,7 @@ class QuestionsController extends Controller
 
                 $pdf = Pdf::loadView('Plantilla_Export.pdf',compact('data','title','filename'));
                 $delete = RespUserTemp::whereNotNull('id')->delete();
+                $deleteanswer = CountAnswer::whereNotNull('id')->delete();
                 return $pdf->download("$title");
             
                 break;
