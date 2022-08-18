@@ -215,7 +215,6 @@ class ExportData {
             $student = User::select('name')->where('id', $item->user_id)->get()->pluck('name');
             $num = ContactInformation::select('enrollment')->where('user_id', $item->user_id)->get()->pluck('enrollment');
             
-            
             $dato = new \stdClass();
             $dato->num_control = $num[0];
             $dato->category = $item->category;
@@ -256,6 +255,7 @@ class ExportData {
             $insertRepst[] = array(
                 'num_control' => $value->num_control,
                 'name' => $student[0],
+                'category' => $value->category,
                 'question' => $value->question,
                 'answer' => $d,
             );

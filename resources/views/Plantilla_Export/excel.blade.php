@@ -18,36 +18,52 @@
             <img src="img/Logo-TecNM.jpeg" width="130px">
         </td>
     </tr>
+    @php
+        $val = '';
+        $val_cat = '';
+    @endphp
     @foreach($data as $value)
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <strong>Num_Control: {{ $value->num_control }}</strong>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <strong>Nombre: {{ $value->name }}</strong>
-            </td>
-        </tr>
-        @foreach($data as $data_r)
+        @if($value->num_control != $val)
+            <tr></tr>
             <tr>
                 <td></td>
-                <td colspan="8">{{ $data_r->question }}</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <strong>Num_Control: {{ $value->num_control }}</strong>
+                </td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Respuesta.- {{ $data_r->answer }}</td>
+                <td>
+                    <strong>Nombre: {{ $value->name }}</strong>
+                </td>
             </tr>
-        @endforeach
+        @endif
+        @php
+            $val = $value->num_control;
+        @endphp
+        @if($value->category != $val_cat)
+            <tr>
+                <td></td>
+                <td colspan="8">{{ $value->category }}</td>
+            </tr>
+        @endif
+        <tr>
+            <td></td>
+            <td colspan="8">{{ $value->question }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Respuesta.- {{ $value->answer }}</td>
+        </tr>
+        @php
+            $val_cat = $data_r->category;
+        @endphp
     @endforeach
     <tr></tr>
     <tr>

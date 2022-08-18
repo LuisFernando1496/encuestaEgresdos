@@ -57,6 +57,9 @@
             text-align: center;
             border-collapse: collapse;
         }
+        .category{
+            color: #4dc2df;
+        }
     </style>
     <body>
         <div class="data-center-items">
@@ -65,23 +68,37 @@
             <h5 class="titulo_centro">Instituto Tecnológico De México (Tuxtla Gutiérrez)</h5>
         </div>
         <br><br><br>
+        @php
+            $val = '';
+            $val_cat = '';
+        @endphp
         @foreach($data as $data_r)
-            <div class="center-items-title">
-                <h4>Datos Del Egresado</h4>
-                <label>N° de Control: {{ $data_r->num_control }}</label><br>
-                <label>Nombre: {{ $data_r->name }}</label><br>
+            @if($data_r->num_control != $val)
+                <div class="center-items-title">
+                    <h4>Datos Del Egresado</h4>
+                    <label>N° de Control: {{ $data_r->num_control }}</label><br>
+                    <label>Nombre: {{ $data_r->name }}</label><br>
+                </div>
+            @endif
+            @php
+                $val = $data_r->num_control;
+            @endphp
+            <div class="center-item">
+                <table>
+                    <tbody>
+                        <tr>
+                            @if($data_r->category != $val_cat)
+                                <td class="center-item category">{{ $data_r->category }}</td>
+                            @endif
+                            <td class="center-item">{{ $data_r->question }}</td>
+                            <td class="center-item">Respuesta. {{ $data_r->answer }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <tbody>
-                @foreach($data as $d)
-                    <tr>
-                        <td class="center-item">{{ $d->category }}</td>
-                        <td class="center-item">{{ $d->question }}</td>
-                        <td class="center-item">Respuesta. {{ $d->answer }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+            @php
+                $val_cat = $data_r->category;
+            @endphp
         @endforeach
         <br><br>
         <label class="titulo_centro">Promedio de respuestas por pregunta</label>

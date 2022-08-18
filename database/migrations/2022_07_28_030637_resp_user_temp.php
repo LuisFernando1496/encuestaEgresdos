@@ -17,6 +17,7 @@ class RespUserTemp extends Migration
             $table->id();
             $table->unsignedBigInteger('num_control');
             $table->text('name');
+            $table->text('category');
             $table->text('question');
             $table->text('answer');
         });
