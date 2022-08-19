@@ -62,7 +62,7 @@
             <td>Respuesta.- {{ $value->answer }}</td>
         </tr>
         @php
-            $val_cat = $data_r->category;
+            $val_cat = $value->category;
         @endphp
     @endforeach
     <tr></tr>
