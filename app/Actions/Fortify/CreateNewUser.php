@@ -38,6 +38,7 @@ class CreateNewUser implements CreatesNewUsers
                         'graduated' => $input['graduated'],
                         'smart_phone' => $input['smart_phone'],
                         'email' => $input['email'],
+                        'semester' => $input['semester'],
                         'password' => Hash::make($input['password']),
                     ]);
                    
@@ -48,10 +49,17 @@ class CreateNewUser implements CreatesNewUsers
                         'enrollment' => $input['enrollment'],
                         'date_graduate' => $input['date_graduate'],
                         'phone_house' => $input['phone_house'],
+                        'semester' => $input['semester'],
                         'user_id' => $user->id,
                     ]);
-                 
-                       $user->roles()->attach(2);
+                 if($input['graduated'] == 1)
+                 {
+                     $user->roles()->attach(3);
+                 }
+                 elseif($input['graduated'] == 0){
+                    $user->roles()->attach(2);
+                 }
+                      
                  
                     return $user;
                

@@ -28,6 +28,6 @@ class CountAnswer extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('count_answers');
     }
 }

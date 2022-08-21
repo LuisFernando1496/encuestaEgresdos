@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->boolean("active")->default(true);
             $table->boolean("graduated")->default(false);
+            $table->text("semester")->nullable();
             $table->string("smart_phone",10)->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

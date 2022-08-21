@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function indexStudents()
     {
-        $users = User::where('graduated',false)->where('active',1)->with('contactInformation')->paginate(5);
+        $users = User::where('graduated',false)->where('active',1)->where('id','!=',1)->with('contactInformation')->paginate(5);
       //  return $users;
         return view('Alumnos.index',compact('users'));
     }

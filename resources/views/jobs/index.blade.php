@@ -21,12 +21,8 @@
                 </svg>
             </a>
             @endif
-            <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-black">Bolsa de
-                trabajo</h1>
-            <p class="max-w-2xl mx-auto my-6 text-center text-gray-900 dark:text-gray-900">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo incidunt ex placeat modi magni quia error
-                alias, adipisci rem similique, at omnis eligendi optio eos harum.
-            </p>
+            <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-black">BOLSA DE TRABAJO</h1>
+            
 
 
 

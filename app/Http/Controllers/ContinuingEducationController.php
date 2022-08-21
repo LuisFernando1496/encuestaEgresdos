@@ -11,7 +11,7 @@ class ContinuingEducationController extends Controller
    
     public function index()
     {
-        $educations = ContinuingEducation::where('status', true)->orderBY('id','DESC')->paginate(8);
+        $educations = ContinuingEducation::where('status', true)->orderBY('id','DESC')->paginate(2);
         return view('continuingEducation.index', compact('educations'));
     }
 

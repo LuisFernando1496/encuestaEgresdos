@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema Seguimiento Egresados</title>
+    <title>SISTEMA PARA EL SEGIMIENTO DE EGRESADOS</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
 <body > 
     <div class="container flex flex-wrap">
         <div class="m-5 p-12 mx-auto">
-         <h1 class="font-mono text-2xl text-center "> Bienvenido al Sistema para el Seguimiento a Egresados</h1>
+         <h1 class="font-mono text-2xl text-center "> BIENVENIDOS AL SISTEMA PARA EL SEGIMIENTO DE EGRESADOS</h1>
         </div>
     </div>
     <div class="max-w-5xl p-1 mx-auto ">

@@ -15,7 +15,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $activities = Activity::where('status',true)->orderBy('id','Desc')->paginate(8);
+        $activities = Activity::where('status',true)->orderBy('id','Desc')->paginate(2);
         return view('eventos.index',compact('activities'));
     }
 

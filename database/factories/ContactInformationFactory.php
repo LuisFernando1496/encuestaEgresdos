@@ -20,7 +20,7 @@ class ContactInformationFactory extends Factory
             'second_email'=> $this->faker->safeEmail,
             'date_graduate'=> Carbon::now(),
             'phone_house'=> $this->faker->regexify("[0-9]{8}"),
-            'user_id'=> rand(1,20),
+            'user_id'=> 1,
         ];
     }
 }

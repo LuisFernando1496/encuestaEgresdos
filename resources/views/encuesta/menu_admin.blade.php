@@ -42,13 +42,20 @@
                 </div>
                 <div class="px-6 py-4 whitespace-nowrap text-left">
                     <label class="p-4">Periodo Escolar:</label>
-                    <div class="inline-flex">
+                   <div class="inline-flex"> 
+                        <select name="year" id="year" class="rounded-lg py-1 px-4"></select>
+                   </div>
+                    <div class="inline-flex"> 
+            
+                              
+                        
+                      
                         <select name="periodoEscolar" id="perdiodo_escolar" class="rounded-lg py-1 px-3">
                             <option value="">- Periodo -</option>
                             <option value="Enero-Junio">Enero - Junio</option>
                             <option value="Agosto-Diciembre">Agosto - Diciembre</option>
                         </select>
-                        <select name="year" id="year" class="rounded-lg py-1 px-3"></select>
+                       
                         <div class="px-6 py-1 whitespace-nowrap text-right">
                             <button class="text-red-600 hover:text-red-900 bg-red-100 rounded-lg py-1 px-3 text-right" type="submit" onclick="buttonPDF();">
                                 Exportar PDF

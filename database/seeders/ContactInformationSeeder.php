@@ -15,6 +15,6 @@ class ContactInformationSeeder extends Seeder
      */
     public function run()
     {
-         $data = ContactInformation::factory(20)->create();
+         $data = ContactInformation::factory(1)->create();
     } 
 }

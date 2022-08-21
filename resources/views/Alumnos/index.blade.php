@@ -77,6 +77,10 @@
                                                                         {{$user->email}} 
                                                                        
                                                                     </div>
+                                                                    <div class="text-sm text-gray-500">
+                                                                        Semestre: {{$user->semester}} 
+                                                                       
+                                                                    </div>
                                                                     @if($user->contactInformation)
                                                                     <div class="text-sm text-gray-500">
                                                                         <span class="text-gray-500">

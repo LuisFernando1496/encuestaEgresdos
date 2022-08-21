@@ -280,6 +280,12 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group" id="semester">
+                                <span class="form-label">Semestre</span>
+                                <input class="form-control" type="number" name="semester"  min="1" max="9"
+                                    placeholder="Ingresa tu semestre actual" autocomplete="off">
+                            </div>
                             <div class="form-group">
                                 <span class="form-label">Direccion</span>
                                 <input class="form-control" type="text" name="address"
@@ -319,8 +325,10 @@
     if (option == '1') {
         document.getElementById('graduated').value = '1';
         let elementdiv = document.getElementById('booking');
+        let semester = document.getElementById('semester');
         let titulo = document.getElementById('titulo');
         let url = `{{ asset('img/egresados.jpg') }}`;
+        semester.style.display="none";
         elementdiv.style.backgroundImage = `url(${url})`;
         titulo.innerHTML = 'Egresado';
 
