@@ -21,7 +21,8 @@ class ExportData {
         $periodo = 0;
         $inicio = 0;
         $final = 0;
-        
+        $year = $request->get('year');
+
         if($request['periodoEscolar'] != null){
             $periodo = 'escolar';
         }else {
@@ -33,22 +34,16 @@ class ExportData {
                 
                 if($request['num_control'] != null) {
                     if($request['periodoEscolar'] == 'Enero-Junio') {
-                        $now = Carbon::now();
-                        $n = $now->year;
-                        
-                        $a = strtotime("$n-01-01 00:00:00");
+                        $a = strtotime("$year-01-01 00:00:00");
                         $inicio = date('Y-m-d H:i:s', $a);
                         
-                        $b = strtotime("$n-06-30 00:00:00");
+                        $b = strtotime("$year-06-30 00:00:00");
                         $final = date('Y-m-d H:i:s', $b);
                     } else {
-                        $now = Carbon::now();
-                        $n = $now->year;
-                        
-                        $a = strtotime("$n-08-01 00:00:00");
+                        $a = strtotime("$year-08-01 00:00:00");
                         $inicio = date('Y-m-d H:i:s', $a);
 
-                        $b = strtotime("$n-12-31 00:00:00");
+                        $b = strtotime("$year-12-31 00:00:00");
                         $final = date('Y-m-d H:i:s', $b);
                     }
 
@@ -57,22 +52,16 @@ class ExportData {
                     return $data;
                 } else {
                     if($request['periodoEscolar'] == 'Enero-Junio') {
-                        $now = Carbon::now();
-                        $n = $now->year;
-                        
-                        $a = strtotime("$n-01-01 00:00:00");
+                        $a = strtotime("$year-01-01 00:00:00");
                         $inicio = date('Y-m-d H:i:s', $a);
                         
-                        $b = strtotime("$n-06-30 00:00:00");
+                        $b = strtotime("$year-06-30 00:00:00");
                         $final = date('Y-m-d H:i:s', $b);
                     } else {
-                        $now = Carbon::now();
-                        $n = $now->year;
-                        
-                        $a = strtotime("$n-08-01 00:00:00");
+                        $a = strtotime("$year-08-01 00:00:00");
                         $inicio = date('Y-m-d H:i:s', $a);
 
-                        $b = strtotime("$n-12-31 00:00:00");
+                        $b = strtotime("$year-12-31 00:00:00");
                         $final = date('Y-m-d H:i:s', $b);
                     }
 
