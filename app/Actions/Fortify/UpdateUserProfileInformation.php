@@ -46,7 +46,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ])->save();
             $contact->update([
                   
-                "address" => $input['address'],
+                "address" => $input['address']?? null,
                 "second_email" => $input['second_email'] ?? null,
                 'enrollment' => $input['enrollment'] ?? null,
                 'date_graduate' => $input['date_graduate'] ?? null,

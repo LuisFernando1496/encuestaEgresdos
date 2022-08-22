@@ -74,27 +74,27 @@
             <x-jet-input-error for="email" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="date_graduate" value="date_graduate" />
+            <x-jet-label for="date_graduate" value="Fecha de egreso" />
             <x-jet-input id="date_graduate" name="date_graduate" type="date" value="{{Carbon\Carbon::parse($logged->contactInformation->date_graduate)->format('Y-m-d')}}" class="mt-1 block w-full"  model.defer="state.date_graduate"/>
             <x-jet-input-error for="date_graduate" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="enrollment" value="enrollment" />
+            <x-jet-label for="enrollment" value="No. Control" />
             <x-jet-input id="enrollment" name="enrollment" type="text" value="{{$logged->contactInformation->enrollment}}" class="mt-1 block w-full" wire:model.defer="state.enrollment"/>
             <x-jet-input-error for="enrollment" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="second_email" value="second_email" />
+            <x-jet-label for="second_email" value="Segundo email" />
             <x-jet-input id="second_email" name="second_email" type="text" value="{{$logged->contactInformation->second_email}}" class="mt-1 block w-full" wire:model.defer="state.second_email"/>
             <x-jet-input-error for="second_email" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="address" value="address" />
+            <x-jet-label for="address" value="Direccion" />
             <x-jet-input id="address" name="address" type="text" value="{{$logged->contactInformation->address}}" class="mt-1 block w-full"  wire:model.defer="state.address"/>
             <x-jet-input-error for="address" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="phone_house" value="phone_house" />
+            <x-jet-label for="phone_house" value="Tel. casa" />
             <x-jet-input id="phone_house" name="phone_house" type="text" value="{{$logged->contactInformation->phone_house}}" class="mt-1 block w-full"  wire:model.defer="state.phone_house"/>
             <x-jet-input-error for="phone_house" class="mt-2" />
         </div>

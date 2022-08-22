@@ -12,7 +12,21 @@
                     <!-- This example requires Tailwind CSS v2.0+ -->
                     <div class="flex-col flex">
                         <div class="block">
-                       
+                            <br>
+                            <form action="{{route('searchStudent',1)}}" method="POST" class="ml-3">
+                                @csrf
+                                <select name="year" id="year" class="rounded-lg py-1 px-4"></select>
+                            <select name="periodoEscolar" id="perdiodo_escolar" class="rounded-lg py-1 px-3 " required>
+                                <option value="">- Periodo -</option>
+                                <option value="Enero-Junio">Enero - Junio</option>
+                                <option value="Agosto-Diciembre">Agosto - Diciembre</option>
+                            </select>
+                            <button type="submit" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                  </svg>
+                            </button>
+                        </form>
                                 {{-- <a class="px-3 py-2 bg-indigo-700 text-indigo-400 hover:text-white float-right" href="#">
                                     Crear Usuario
                                 </a> --}}
@@ -25,7 +39,7 @@
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                     <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
                                       
-                                       
+                                        
                                         {{-- @unless ($search == '')
                                             <button wire:click="clear" class="form-input rounded-md shadow-sm mt-1 ml-6 block btn text-red-500">
                                                 X
@@ -145,7 +159,7 @@
                                         </div>
                                     @else
                                     <div class="bg-white px-4 py-3 border-t border-gray-500 sm:px-6">
-                                        Sin resultados para: shasa
+                                        Sin resultados
                                     </div>
                                     @endif
                                 </div>
@@ -166,6 +180,18 @@
                     }
                 }
               </style>
+               <script>
+                var new_y = new Date();
+                var ful_year = new_y.getFullYear();
+                var select = document.getElementById("year");
+                for (let index = ful_year; index >= 2010; index--) {
+                    var opc = document.createElement("option");
+                    opc.text = index;
+                    opc.value = index;
+                    select.add(opc);     
+                }
+              
+            </script>
         </div>
     </div>
     </x-app-layout>
