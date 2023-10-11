@@ -96,7 +96,7 @@
         var new_y = new Date();
         var ful_year = new_y.getFullYear();
         var select = document.getElementById("year");
-        for (let index = ful_year; index >= 2010; index--) {
+        for (let index = ful_year; index >= 1997; index--) {
             var opc = document.createElement("option");
             opc.text = index;
             opc.value = index;

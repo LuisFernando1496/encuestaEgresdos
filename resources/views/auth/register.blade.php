@@ -216,7 +216,7 @@
                         <div class="form-header">
                             <h1 id="titulo" class="animate__animated animate__fadeInDown animate__delay-.5s">Alumno</h1>
                         </div>
-                        <form method="POST" action="{{ route('register') }}"
+                        <form method="POST" id="formRegister" action="{{ route('register') }}"
                             class="animate__animated animate__fadeInUpBig animate__delay-.5s">
                             @csrf
                             <div id="formInit">
@@ -305,7 +305,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <button class="submit-btn" >Registrar</button>
+                                        <button onclick="enviar(event)" class="submit-btn" >Registrar</button>
                                     </div>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@
     if (option == '1') {
         document.getElementById('graduated').value = '1';
         let elementdiv = document.getElementById('booking');
-        let semester = document.getElementById('semester');
+        
         let titulo = document.getElementById('titulo');
         let url = `{{ asset('img/egresados.jpg') }}`;
         semester.style.display="none";
@@ -349,6 +349,15 @@
            form2.style.display = 'block';
         }
     }
+  const enviar = (event) =>
+  {
+     console.log('hola');
+    event.preventDefault();
+    let formRegister = document.getElementById('formRegister');
+    formRegister.submit();
+   
+
+  }
 </script>
 
 </html>

@@ -102,7 +102,7 @@
         @endforeach
         <br><br>
         <label class="titulo_centro">Promedio de respuestas por pregunta</label>
-        <img class="chart" src="img/{{ $filename }}">
+        {{-- <img class="chart" src="img/{{ $filename }}"> --}}
         <br>
     </body>
 </html>

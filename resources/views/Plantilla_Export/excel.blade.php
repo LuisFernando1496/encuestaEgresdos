@@ -79,7 +79,7 @@
         <td></td>
         <td></td>
         <td>
-            <img class="chart" src="img/{{ $filename }}" width="850px">
+            {{-- <img class="chart" src="img/{{ $filename }}" width="850px"> --}}
         </td>    
     </tr>
     

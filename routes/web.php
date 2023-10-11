@@ -3,6 +3,7 @@
 use App\Events\NuevoMensaje;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ContinuingEducationController;
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\QuestionsController;
@@ -76,11 +77,21 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::put('/continuingEducation/{continuingEducation}',[ContinuingEducationController::class,'update'])->name('education.update');
     Route::get('/continuingEducation/eliminar/{continuingEducation}',[ContinuingEducationController::class,'destroy'])->name('education.destroy');
 
+    Route::get('/images',[ImagesController::class,'index'])->name('images.index'); 
+    Route::get('/images/create',[ImagesController::class,'create'])->name('images.create');
+    Route::post('/images/crear',[ImagesController::class,'store'])->name('images.store');
+    Route::get('/images/show/{images}',[ImagesController::class,'show'])->name('images.show');
+    Route::get('/images/editar/{images}',[ImagesController::class,'edit'])->name('images.edit');
+    Route::put('/images/{images}',[ImagesController::class,'update'])->name('images.update');
+    Route::get('/images/eliminar/{images}',[ImagesController::class,'destroy'])->name('images.destroy');
+
     Route::get('/messages',[MessagesController::class,'index'])->name('messages.index');
     Route::get('/messages/admin',[MessagesController::class,'admindChat'])->name('admindChat');
     Route::get('/messages/admin/data/{id}/{name}',[MessagesController::class,'redirect'])->name('reenvio');
 
     Route::post('search/user/{option}',[UsersController::class,'searchUsers'])->name('searchStudent');
+
+    Route::post('usuarios/download/{to}/{from}/{option}',[UsersController::class,'userDonwload'])->name('userDonwload');
    
 });
 

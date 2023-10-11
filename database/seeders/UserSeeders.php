@@ -16,12 +16,6 @@ class UserSeeders extends Seeder
      */
     public function run()
     {
-        // $users = User::factory(1)->create();
-        // $role = Role::where("id", 2)->first();
-
-        // $users->each(function($user) use ($role){
-        //     $user->roles()->attach($role->id);
-        // });
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
@@ -32,5 +26,13 @@ class UserSeeders extends Seeder
 
         ]);
         $admin->roles()->attach(1);
+        
+        $users = User::factory(1)->create();
+        $role = Role::where("id", 2)->first();
+
+        $users->each(function($user) use ($role){
+            $user->roles()->attach($role->id);
+        });
+      
     }
 }

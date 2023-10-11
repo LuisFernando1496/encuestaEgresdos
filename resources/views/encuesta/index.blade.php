@@ -4,7 +4,7 @@
             {{ __('Quiz') }}
         </h2>
     </x-slot>
-    
+    <h5 class="text-center"><strong>*De la manera mas atenta se le pide resolver la siguiente encuesta. Gracias!</strong></h5>
     <form action="{{route('encuesta.store')}}" method="POST">
         @csrf
         <div class="container flex flex-wrap ">

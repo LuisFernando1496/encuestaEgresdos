@@ -38,11 +38,16 @@
                 </div>
                   @endif
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('encuesta') }}" :active="request()->routeIs('Quiz')">
+                    <x-jet-nav-link href="{{ route('encuesta') }}" :active="request()->routeIs('encuesta')">
                         {{ __('Quiz') }}
                     </x-jet-nav-link>
                 </div>
                   @if (auth()->user()->roles[0]->name == 'admin')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('images.index') }}" :active="request()->routeIs('images.index')">
+                        Imagenes
+                    </x-jet-nav-link>
+                </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('studens') }}" :active="request()->routeIs('Quiz')">
                         {{ __('Students') }}
